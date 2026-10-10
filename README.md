@@ -1,4 +1,4 @@
-# WildGuard — Smart Wildlife Conservation & Protected Area Management
+# NatureSheild — Smart Wildlife Conservation & Protected Area Management
 
 **Team 27 | VIT Enterprise Java Hackathon | October 10–11, 2026**
 
@@ -6,7 +6,7 @@
 
 ## Overview
 
-WildGuard is an enterprise-grade microservices application for wildlife conservation and protected area management. Built with Java 17, Spring Boot 3.3.5, PostgreSQL 18, and Thymeleaf, it provides a fully integrated operational platform for wildlife authorities.
+NatureSheild is an enterprise-grade microservices platform for wildlife conservation and protected area management. Built with Java 17, Spring Boot 3.3.5, PostgreSQL, and Thymeleaf, it provides an integrated operational network for state wildlife authorities, reserve range officers, and field patrols.
 
 ## Architecture
 
@@ -14,33 +14,25 @@ Four independent Spring Boot microservices:
 
 | Service | Port | Responsibility |
 |---------|------|----------------|
-| Wildlife Service | 8081 | Animals, species, observations, dashboard |
-| Protected Area Service | 8082 | Protected areas, zones, habitats, water sources |
-| Patrol Service | 8083 | Patrols, field staff, vehicles, equipment |
-| Incident Service | 8084 | Incidents, rescues, conservation programmes |
+| Wildlife Core Service | 8081 | Animals, species catalogue, observations, officer authentication, and central dashboard |
+| Protected Area Service | 8082 | Protected areas & reserves, management zones, habitats, water sources |
+| Patrol Operations Service | 8083 | Patrol logs & schedules, field staff squads, vehicles, equipment resources |
+| Threat & Incident Service | 8084 | Incident tracking, rescue & rehabilitation cases, conservation programmes |
 
 ## Technology Stack
 
 - **Language:** Java 17
 - **Framework:** Spring Boot 3.3.5
-- **Frontend:** Thymeleaf + Bootstrap 5 + Custom CSS
-- **Database:** PostgreSQL 18 (`WildGuard` database)
+- **Architecture:** Spring MVC + REST APIs
+- **Frontend:** Thymeleaf + Bootstrap 5 + Clean Navy Theme
+- **Database:** PostgreSQL (`WildGuard` database with 4 schemas: `wildlife`, `protected_areas`, `patrol`, `incidents`)
 - **Persistence:** Spring Data JPA + Hibernate
-- **Build:** Maven (with Maven Wrapper)
+- **Build Tool:** Maven
 
-## Prerequisites
-
-- Java 17 or later
-- PostgreSQL 18 running on port 5432
-- Maven 3.9+ (or use included mvnw wrapper)
-- `WildGuard` PostgreSQL database created
-
-## Quick Setup
+## Quick Launch
 
 ### 1. Database Setup
-
 ```sql
--- Connect as postgres and run:
 CREATE DATABASE "WildGuard";
 \c WildGuard
 CREATE SCHEMA wildlife;
@@ -49,86 +41,37 @@ CREATE SCHEMA patrol;
 CREATE SCHEMA incidents;
 ```
 
-Or use the provided script:
+Or execute the provided SQL setup script:
 ```bash
 psql -U postgres -d WildGuard -f scripts/setup-db.sql
 ```
 
-### 2. Configure Database Password
-
-Update the password in each service's `application.properties`:
-```properties
-spring.datasource.password=YOUR_POSTGRES_PASSWORD
-```
-
-Default configured: `780321`
-
-### 3. Start All Services
-
-**Windows:**
-```bat
-start-all.bat
-```
-
-**Or start individually:**
+### 2. Run All Microservices
+From the root directory:
 ```bash
-cd wildlife-service && mvnw.cmd spring-boot:run
-cd protected-area-service && mvnw.cmd spring-boot:run
-cd patrol-service && mvnw.cmd spring-boot:run
-cd incident-service && mvnw.cmd spring-boot:run
+.\start-all.bat
 ```
 
-## Application URLs
+Or run via Maven reactor:
+```bash
+.\mvnw.cmd spring-boot:run -pl wildlife-service
+.\mvnw.cmd spring-boot:run -pl protected-area-service
+.\mvnw.cmd spring-boot:run -pl patrol-service
+.\mvnw.cmd spring-boot:run -pl incident-service
+```
 
-| URL | Description |
-|-----|-------------|
-| http://localhost:8081 | Wildlife Service (main dashboard) |
-| http://localhost:8081/dashboard | Operations Dashboard |
-| http://localhost:8081/animals | Animal Records |
-| http://localhost:8081/species | Species Catalogue |
-| http://localhost:8082 | Protected Areas |
-| http://localhost:8082/areas | Protected Area List |
-| http://localhost:8082/zones | Zone Management |
-| http://localhost:8082/habitats | Habitat Records |
-| http://localhost:8082/water-sources | Water Resources |
-| http://localhost:8083 | Patrol Operations |
-| http://localhost:8083/staff | Field Staff |
-| http://localhost:8083/resources | Vehicles & Equipment |
-| http://localhost:8084 | Incident Management |
-| http://localhost:8084/rescues | Rescue & Rehabilitation |
-| http://localhost:8084/programmes | Conservation Programmes |
-| http://localhost:8084/incidents/report | Monthly Incident Report |
+## Service URLs
 
-## REST API Endpoints
-
-| Service | Base Path |
-|---------|-----------|
-| Wildlife | `GET /api/wildlife/animals` |
-| Protected Areas | `GET /api/protected-areas` |
-| Patrols | `GET /api/patrols` |
-| Incidents | `GET /api/incidents` |
-| Health Checks | `GET /api/*/health` |
-
-## Demo Data
-
-Each service automatically seeds realistic demonstration data on first startup:
-- 5 species, 10 animals, 5 observations (Wildlife)
-- 3 protected areas, 6 zones, 4 habitats, 4 water sources (Protected Areas)
-- 6 staff, 3 vehicles, 4 equipment, 3 patrols (Patrol)
-- 8 incidents, 4 rescue cases, 2 conservation programmes (Incident)
-
-## Key Workflows
-
-1. **Monthly Incident Report:** `http://localhost:8084/incidents/report`
-2. **Register Animal:** `http://localhost:8081/animals/new`
-3. **Create Patrol:** `http://localhost:8083/patrols/new`
-4. **Report Incident:** `http://localhost:8084/incidents/new`
-5. **Track Rescue:** `http://localhost:8084/rescues`
-6. **Conservation Programmes:** `http://localhost:8084/programmes`
+- **Officer Login Gateway:** [http://localhost:8081/login](http://localhost:8081/login)
+- **Operations Dashboard:** [http://localhost:8081/dashboard](http://localhost:8081/dashboard)
+- **Protected Areas & Zones:** [http://localhost:8082/areas](http://localhost:8082/areas)
+- **Patrol Logistics:** [http://localhost:8083/patrols](http://localhost:8083/patrols)
+- **Threat & Incident Log:** [http://localhost:8084/incidents](http://localhost:8084/incidents)
+- **Official Monthly Scenario Report:** [http://localhost:8084/incidents/report](http://localhost:8084/incidents/report)
 
 ## Documentation
 
-See `docs/` folder for:
+Full project design documentation is located in the `docs/` folder:
 - [Architecture](docs/ARCHITECTURE.md)
 - [Database Design](docs/DATABASE_DESIGN.md)
 - [API Documentation](docs/API_DOCUMENTATION.md)
