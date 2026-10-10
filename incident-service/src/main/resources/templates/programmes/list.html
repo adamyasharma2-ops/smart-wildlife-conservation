@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Conservation Programmes')}"></head>
+<body>
+    <div th:replace="~{fragments/layout :: sidebar}"></div>
+    
+    <div class="main-content">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>Conservation Programmes</h2>
+            <a th:href="@{/programmes/new}" class="btn btn-primary"><i class="bi bi-plus-circle"></i> New Programme</a>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-6 col-lg-4 mb-4" th:each="p : ${programmes}">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-start mb-2">
+                            <h5 class="card-title text-truncate mb-0" th:text="${p.name}"></h5>
+                            <span class="badge bg-primary" th:text="${p.status}"></span>
+                        </div>
+                        <h6 class="card-subtitle mb-3 text-muted" th:text="${p.programmeCode}"></h6>
+                        <p class="card-text small text-truncate-2" th:text="${p.description}"></p>
+                        
+                        <div class="mt-auto">
+                            <div class="d-flex justify-content-between small mb-1">
+                                <span>Progress</span>
+                                <span th:text="${p.completionPercentage} + '%'"></span>
+                            </div>
+                            <div class="progress mb-3" style="height: 10px;">
+                                <div class="progress-bar bg-success" role="progressbar" th:style="'width: ' + ${p.completionPercentage} + '%'" th:aria-valuenow="${p.completionPercentage}" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                            <div class="d-flex justify-content-between small text-muted mb-3">
+                                <span>Start: <span th:text="${p.startDate}"></span></span>
+                            </div>
+                            <a th:href="@{/programmes/{id}(id=${p.id})}" class="btn btn-sm btn-outline-primary w-100">View Details</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-12" th:if="${#lists.isEmpty(programmes)}">
+                <div class="alert alert-info">No conservation programmes found.</div>
+            </div>
+        </div>
+    </div>
+    
+    <div th:replace="~{fragments/layout :: scripts}"></div>
+</body>
+</html>

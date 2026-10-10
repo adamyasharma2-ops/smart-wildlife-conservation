@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Programme Details')}"></head>
+<body>
+    <div th:replace="~{fragments/layout :: sidebar}"></div>
+    
+    <div class="main-content">
+        <div class="mb-4">
+            <a th:href="@{/programmes}" class="text-decoration-none"><i class="bi bi-arrow-left"></i> Back to Programmes</a>
+            <h2 class="mt-2" th:text="${programme.name}"></h2>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-12 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <h5 class="card-title">Programme Info <a th:href="@{/programmes/{id}/edit(id=${programme.id})}" class="btn btn-sm btn-link">Edit</a></h5>
+                                <p><strong>Code:</strong> <span th:text="${programme.programmeCode}"></span></p>
+                                <p><strong>Status:</strong> <span class="badge bg-primary" th:text="${programme.status}"></span></p>
+                                <p><strong>Description:</strong> <span th:text="${programme.description}"></span></p>
+                                <p><strong>Objectives:</strong> <span th:text="${programme.objectives}"></span></p>
+                                <p><strong>Timeline:</strong> <span th:text="${programme.startDate}"></span> to <span th:text="${programme.endDate != null ? programme.endDate : 'Ongoing'}"></span></p>
+                            </div>
+                            <div class="col-md-4 text-center d-flex flex-column justify-content-center">
+                                <h5>Overall Progress</h5>
+                                <h1 class="display-4 text-success" th:text="${programme.completionPercentage} + '%'"></h1>
+                                <div class="progress" style="height: 20px;">
+                                    <div class="progress-bar bg-success" role="progressbar" th:style="'width: ' + ${programme.completionPercentage} + '%'"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0">Activities</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Activity Name</th>
+                                        <th>Status</th>
+                                        <th>Progress</th>
+                                        <th>Target Date</th>
+                                        <th>Update</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="act : ${activities}">
+                                        <td th:text="${act.activityName}"></td>
+                                        <td><span class="badge bg-secondary" th:text="${act.status}"></span></td>
+                                        <td>
+                                            <div class="progress" style="height: 10px; margin-top: 5px;">
+                                                <div class="progress-bar" role="progressbar" th:style="'width: ' + ${act.progressPercent} + '%'" th:classappend="${act.progressPercent == 100 ? 'bg-success' : 'bg-primary'}"></div>
+                                            </div>
+                                            <small th:text="${act.progressPercent} + '%'"></small>
+                                        </td>
+                                        <td th:text="${act.targetDate}"></td>
+                                        <td>
+                                            <form th:action="@{/programmes/activities/{actId}/status(actId=${act.id})}" method="post" class="d-flex align-items-center gap-2">
+                                                <input type="hidden" name="programmeId" th:value="${programme.id}">
+                                                <select name="status" class="form-select form-select-sm" style="width: auto;">
+                                                    <option value="PENDING" th:selected="${act.status == 'PENDING'}">PENDING</option>
+                                                    <option value="IN_PROGRESS" th:selected="${act.status == 'IN_PROGRESS'}">IN_PROGRESS</option>
+                                                    <option value="COMPLETED" th:selected="${act.status == 'COMPLETED'}">COMPLETED</option>
+                                                </select>
+                                                <input type="number" name="progressPercent" class="form-control form-control-sm" th:value="${act.progressPercent}" min="0" max="100" style="width: 70px;">
+                                                <button type="submit" class="btn btn-sm btn-outline-primary">Save</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                    <tr th:if="${#lists.isEmpty(activities)}">
+                                        <td colspan="5" class="text-center">No activities defined yet.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0">Add Activity</h5>
+                    </div>
+                    <div class="card-body">
+                        <form th:action="@{/programmes/{id}/activities(id=${programme.id})}" method="post" th:object="${newActivity}">
+                            <div class="mb-3">
+                                <label class="form-label">Activity Name *</label>
+                                <input type="text" th:field="*{activityName}" class="form-control" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Target Date</label>
+                                <input type="date" th:field="*{targetDate}" class="form-control">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Description</label>
+                                <textarea th:field="*{description}" class="form-control" rows="2"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100">Add Activity</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div th:replace="~{fragments/layout :: scripts}"></div>
+</body>
+</html>

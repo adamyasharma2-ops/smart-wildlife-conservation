@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout :: head('Species Form')}"></head>
+<body>
+<div class="d-flex">
+    <nav th:replace="~{layout :: sidebar('species')}"></nav>
+    <div class="main-content flex-grow-1 p-4">
+        <div class="mb-4">
+            <h2 class="fw-bold text-success-emphasis mb-0" th:text="${species.id == null ? 'Add Species' : 'Edit Species'}">Species Form</h2>
+            <small class="text-muted">Enter biological species information</small>
+        </div>
+        <div class="card shadow-sm border-0">
+            <div class="card-body p-4">
+                <form th:action="${species.id == null ? '/species' : '/species/' + species.id + '/edit'}" th:object="${species}" method="post">
+                    <div class="row g-3 mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Common Name *</label>
+                            <input type="text" class="form-control" th:field="*{commonName}" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Scientific Name *</label>
+                            <input type="text" class="form-control" th:field="*{scientificName}" required>
+                        </div>
+                    </div>
+                    <div class="row g-3 mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Conservation Status *</label>
+                            <select class="form-select" th:field="*{conservationStatus}" required>
+                                <option value="LEAST_CONCERN">Least Concern (LC)</option>
+                                <option value="NEAR_THREATENED">Near Threatened (NT)</option>
+                                <option value="VULNERABLE">Vulnerable (VU)</option>
+                                <option value="ENDANGERED">Endangered (EN)</option>
+                                <option value="CRITICALLY_ENDANGERED">Critically Endangered (CR)</option>
+                                <option value="EXTINCT_IN_WILD">Extinct in the Wild (EW)</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Typical Habitat</label>
+                            <input type="text" class="form-control" th:field="*{habitat}">
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <label class="form-label fw-semibold">Description</label>
+                        <textarea class="form-control" th:field="*{description}" rows="3"></textarea>
+                    </div>
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="btn btn-primary">Save Species</button>
+                        <a th:href="@{/species}" class="btn btn-outline-secondary">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head(${incident.id == null ? 'New Incident' : 'Edit Incident'})}"></head>
+<body>
+    <div th:replace="~{fragments/layout :: sidebar}"></div>
+    
+    <div class="main-content">
+        <div class="mb-4">
+            <a th:href="@{/incidents}" class="text-decoration-none"><i class="bi bi-arrow-left"></i> Back to Incidents</a>
+            <h2 class="mt-2" th:text="${incident.id == null ? 'Report New Incident' : 'Edit Incident'}"></h2>
+        </div>
+        
+        <div class="card">
+            <div class="card-body">
+                <form th:action="${incident.id == null ? '/incidents' : '/incidents/' + incident.id + '/edit'}" th:object="${incident}" method="post">
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Incident Type *</label>
+                            <select th:field="*{incidentType}" class="form-select" required>
+                                <option value="">Select Type</option>
+                                <option value="WILDLIFE_INJURY">WILDLIFE INJURY</option>
+                                <option value="HUMAN_WILDLIFE_CONFLICT">HUMAN WILDLIFE CONFLICT</option>
+                                <option value="POACHING">POACHING</option>
+                                <option value="ILLEGAL_ACTIVITY">ILLEGAL ACTIVITY</option>
+                                <option value="HABITAT_DESTRUCTION">HABITAT DESTRUCTION</option>
+                                <option value="FIRE">FIRE</option>
+                                <option value="DISEASE_OUTBREAK">DISEASE OUTBREAK</option>
+                                <option value="OTHER">OTHER</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Severity *</label>
+                            <select th:field="*{severity}" class="form-select" required>
+                                <option value="">Select Severity</option>
+                                <option value="LOW">LOW</option>
+                                <option value="MEDIUM">MEDIUM</option>
+                                <option value="HIGH">HIGH</option>
+                                <option value="CRITICAL">CRITICAL</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Description *</label>
+                        <textarea th:field="*{description}" class="form-control" rows="4" required></textarea>
+                    </div>
+                    
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Reported Date & Time</label>
+                            <input type="datetime-local" th:field="*{reportedAt}" class="form-control">
+                        </div>
+                        <div class="col-md-6" th:if="${incident.id != null}">
+                            <label class="form-label">Status</label>
+                            <select th:field="*{status}" class="form-select">
+                                <option value="REPORTED">REPORTED</option>
+                                <option value="UNDER_INVESTIGATION">UNDER INVESTIGATION</option>
+                                <option value="IN_PROGRESS">IN PROGRESS</option>
+                                <option value="RESOLVED">RESOLVED</option>
+                                <option value="CLOSED">CLOSED</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <h5 class="mt-4 mb-3 border-bottom pb-2">Location Details</h5>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Zone ID</label>
+                            <input type="number" th:field="*{zoneId}" class="form-control">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Zone Name</label>
+                            <input type="text" th:field="*{zoneName}" class="form-control">
+                        </div>
+                    </div>
+                    
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Latitude</label>
+                            <input type="number" step="any" th:field="*{latitude}" class="form-control">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Longitude</label>
+                            <input type="number" step="any" th:field="*{longitude}" class="form-control">
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Location Description</label>
+                        <input type="text" th:field="*{locationDescription}" class="form-control">
+                    </div>
+                    
+                    <h5 class="mt-4 mb-3 border-bottom pb-2">Assignment Details</h5>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Assigned Personnel ID</label>
+                            <input type="text" th:field="*{assignedPersonnelId}" class="form-control">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Assigned Personnel Name</label>
+                            <input type="text" th:field="*{assignedPersonnelName}" class="form-control">
+                        </div>
+                    </div>
+                    
+                    <div class="text-end mt-4">
+                        <a th:href="${incident.id == null ? '/incidents' : '/incidents/' + incident.id}" class="btn btn-secondary me-2">Cancel</a>
+                        <button type="submit" class="btn btn-primary">Save Incident</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <div th:replace="~{fragments/layout :: scripts}"></div>
+</body>
+</html>

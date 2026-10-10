@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout :: head('Animal Records')}"></head>
+<body>
+<div class="d-flex">
+    <nav th:replace="~{layout :: sidebar('animals')}"></nav>
+    <div class="main-content flex-grow-1 p-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <h2 class="fw-bold text-success-emphasis mb-0">Wildlife & Animal Records</h2>
+                <small class="text-muted">Manage Individual Identification, Health & Conservation Records</small>
+            </div>
+            <a th:href="@{/animals/new}" class="btn btn-primary"><i class="bi bi-plus-circle me-1"></i>Add Animal</a>
+        </div>
+
+        <!-- Search bar -->
+        <div class="card shadow-sm border-0 mb-4">
+            <div class="card-body">
+                <form th:action="@{/animals}" method="get" class="row g-2 align-items-center">
+                    <div class="col-md-9">
+                        <input type="text" name="q" class="form-control" placeholder="Search by tag ID, animal name, or species..." th:value="${query}">
+                    </div>
+                    <div class="col-md-3 d-flex gap-2">
+                        <button type="submit" class="btn btn-success flex-grow-1"><i class="bi bi-search me-1"></i>Search</button>
+                        <a th:href="@{/animals}" class="btn btn-outline-secondary">Reset</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Animals table -->
+        <div class="card shadow-sm border-0">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Tag ID</th>
+                            <th>Name</th>
+                            <th>Species</th>
+                            <th>Sex / Age</th>
+                            <th>Health Status</th>
+                            <th>Conservation Status</th>
+                            <th>Protected Area</th>
+                            <th>Last Observed</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="a : ${animals}">
+                            <td><span class="badge bg-dark" th:text="${a.tagId}">WL-001</span></td>
+                            <td class="fw-semibold" th:text="${a.name}">Name</td>
+                            <td th:text="${a.speciesName}">Species</td>
+                            <td th:text="${a.sex + ' / ' + a.estimatedAge + ' yrs'}">Sex/Age</td>
+                            <td>
+                                <span class="badge" th:classappend="${a.healthStatus == 'HEALTHY' ? 'bg-success' : (a.healthStatus == 'INJURED' ? 'bg-warning text-dark' : 'bg-danger')}" th:text="${a.healthStatus}">HEALTHY</span>
+                            </td>
+                            <td><span class="badge bg-secondary" th:text="${a.conservationStatus}">STATUS</span></td>
+                            <td th:text="${a.currentAreaName}">Area</td>
+                            <td th:text="${a.lastObservedDate}">Date</td>
+                            <td>
+                                <a th:href="@{'/animals/' + ${a.id}}" class="btn btn-sm btn-outline-primary"><i class="bi bi-eye"></i></a>
+                                <a th:href="@{'/animals/' + ${a.id} + '/edit'}" class="btn btn-sm btn-outline-secondary"><i class="bi bi-pencil"></i></a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

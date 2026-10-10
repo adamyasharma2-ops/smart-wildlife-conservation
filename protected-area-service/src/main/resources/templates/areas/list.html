@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Protected Areas')}"></head>
+<body>
+    <div th:replace="~{fragments :: sidebar}"></div>
+    
+    <div class="main-content">
+        <div class="container-fluid">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2>Protected Areas</h2>
+                <a href="/areas/new" class="btn btn-primary">Add Area</a>
+            </div>
+
+            <div class="card">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Area Code</th>
+                                    <th>Name</th>
+                                    <th>Type</th>
+                                    <th>State</th>
+                                    <th>Size (km²)</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="area : ${areas}">
+                                    <td th:text="${area.areaCode}">PA-001</td>
+                                    <td th:text="${area.name}">Corbett</td>
+                                    <td th:text="${area.areaType}">NATIONAL_PARK</td>
+                                    <td th:text="${area.state}">Uttarakhand</td>
+                                    <td th:text="${area.totalAreaKm2}">520.8</td>
+                                    <td>
+                                        <span th:class="${area.status == 'ACTIVE' ? 'badge bg-success' : 'badge bg-warning'}"
+                                              th:text="${area.status}">ACTIVE</span>
+                                    </td>
+                                    <td>
+                                        <a th:href="@{/areas/{id}(id=${area.id})}" class="btn btn-sm btn-info text-white">View</a>
+                                        <a th:href="@{/areas/{id}/edit(id=${area.id})}" class="btn btn-sm btn-secondary">Edit</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div th:replace="~{fragments :: scripts}"></div>
+    <div th:replace="~{fragments :: custom-scripts}"></div>
+</body>
+</html>

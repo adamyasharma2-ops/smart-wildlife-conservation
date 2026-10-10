@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head(${rescueCase.id == null ? 'New Rescue Case' : 'Edit Rescue Case'})}"></head>
+<body>
+    <div th:replace="~{fragments/layout :: sidebar}"></div>
+    
+    <div class="main-content">
+        <div class="mb-4">
+            <a th:href="@{/rescues}" class="text-decoration-none"><i class="bi bi-arrow-left"></i> Back to Rescue Cases</a>
+            <h2 class="mt-2" th:text="${rescueCase.id == null ? 'New Rescue Case' : 'Edit Rescue Case'}"></h2>
+        </div>
+        
+        <div class="card">
+            <div class="card-body">
+                <form th:action="${rescueCase.id == null ? '/rescues' : '/rescues/' + rescueCase.id + '/edit'}" th:object="${rescueCase}" method="post">
+                    
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Animal Species *</label>
+                            <input type="text" th:field="*{animalSpecies}" class="form-control" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Animal ID / Tag (if known)</label>
+                            <input type="text" th:field="*{animalTagId}" class="form-control">
+                        </div>
+                    </div>
+                    
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Rescue Location *</label>
+                            <input type="text" th:field="*{rescueLocation}" class="form-control" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Rescue Date & Time *</label>
+                            <input type="datetime-local" th:field="*{rescueDateTime}" class="form-control" required>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Initial Condition *</label>
+                        <textarea th:field="*{initialCondition}" class="form-control" rows="3" required></textarea>
+                    </div>
+                    
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Rescue Team</label>
+                            <input type="text" th:field="*{rescueTeam}" class="form-control">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Related Incident Code</label>
+                            <input type="text" th:field="*{incidentCode}" class="form-control">
+                        </div>
+                    </div>
+                    
+                    <div th:if="${rescueCase.id != null}" class="mb-3 border-top pt-3">
+                        <label class="form-label">Treatment Details</label>
+                        <textarea th:field="*{treatmentDetails}" class="form-control" rows="4"></textarea>
+                    </div>
+                    
+                    <div class="text-end mt-4">
+                        <a th:href="${rescueCase.id == null ? '/rescues' : '/rescues/' + rescueCase.id}" class="btn btn-secondary me-2">Cancel</a>
+                        <button type="submit" class="btn btn-primary">Save Rescue Case</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <div th:replace="~{fragments/layout :: scripts}"></div>
+</body>
+</html>

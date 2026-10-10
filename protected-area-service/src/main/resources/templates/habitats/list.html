@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Habitats')}"></head>
+<body>
+    <div th:replace="~{fragments :: sidebar}"></div>
+    
+    <div class="main-content">
+        <div class="container-fluid">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2>Habitats</h2>
+                <a href="/habitats/new" class="btn btn-primary">Add Habitat</a>
+            </div>
+
+            <div class="card">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Zone</th>
+                                    <th>Protected Area</th>
+                                    <th>Condition</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="hab : ${habitats}">
+                                    <td th:text="${hab.habitatType}"></td>
+                                    <td th:text="${hab.zoneName}"></td>
+                                    <td th:text="${hab.protectedAreaName}"></td>
+                                    <td>
+                                        <span class="badge" th:classappend="${hab.condition == 'EXCELLENT' ? 'bg-success' : (hab.condition == 'GOOD' ? 'bg-info' : 'bg-warning')}"
+                                              th:text="${hab.condition}">GOOD</span>
+                                    </td>
+                                    <td>
+                                        <a th:href="@{/habitats/{id}/edit(id=${hab.id})}" class="btn btn-sm btn-secondary">Edit</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div th:replace="~{fragments :: scripts}"></div>
+</body>
+</html>

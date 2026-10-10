@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Zone Details')}"></head>
+<body>
+    <div th:replace="~{fragments :: sidebar}"></div>
+    
+    <div class="main-content">
+        <div class="container-fluid">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2 th:text="${zone.name}">Zone Name</h2>
+                <div>
+                    <a th:href="@{/zones/{id}/edit(id=${zone.id})}" class="btn btn-secondary">Edit Zone</a>
+                    <form th:action="@{/zones/{id}/delete(id=${zone.id})}" method="post" class="d-inline" data-confirm="Delete this zone?">
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card mb-4">
+                        <div class="card-header">Zone Info</div>
+                        <div class="card-body">
+                            <p><strong>Code:</strong> <span th:text="${zone.zoneCode}"></span></p>
+                            <p><strong>Type:</strong> <span th:text="${zone.zoneType}"></span></p>
+                            <p><strong>Area:</strong> <span th:text="${zone.protectedAreaName}"></span></p>
+                            <p><strong>Status:</strong> <span th:text="${zone.status}"></span></p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-8">
+                    <!-- Habitats -->
+                    <div class="card mb-4">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <span>Habitats</span>
+                            <a th:href="@{/habitats/new(zoneId=${zone.id})}" class="btn btn-sm btn-light text-dark">Add Habitat</a>
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-sm">
+                                <thead><tr><th>Type</th><th>Condition</th><th>Actions</th></tr></thead>
+                                <tbody>
+                                    <tr th:each="hab : ${habitats}">
+                                        <td th:text="${hab.habitatType}"></td>
+                                        <td th:text="${hab.condition}"></td>
+                                        <td><a th:href="@{/habitats/{id}/edit(id=${hab.id})}" class="btn btn-sm btn-secondary">Edit</a></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Water Sources -->
+                    <div class="card mb-4">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <span>Water Sources</span>
+                            <a th:href="@{/water-sources/new(zoneId=${zone.id})}" class="btn btn-sm btn-light text-dark">Add Water Source</a>
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-sm">
+                                <thead><tr><th>Name</th><th>Type</th><th>Condition</th><th>Actions</th></tr></thead>
+                                <tbody>
+                                    <tr th:each="ws : ${waterSources}">
+                                        <td th:text="${ws.name}"></td>
+                                        <td th:text="${ws.sourceType}"></td>
+                                        <td th:text="${ws.condition}"></td>
+                                        <td><a th:href="@{/water-sources/{id}/edit(id=${ws.id})}" class="btn btn-sm btn-secondary">Edit</a></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div th:replace="~{fragments :: scripts}"></div>
+    <div th:replace="~{fragments :: custom-scripts}"></div>
+</body>
+</html>

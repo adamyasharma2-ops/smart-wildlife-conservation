@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Area Details')}"></head>
+<body>
+    <div th:replace="~{fragments :: sidebar}"></div>
+    
+    <div class="main-content">
+        <div class="container-fluid">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2 th:text="${area.name}">Area Name</h2>
+                <div>
+                    <a th:href="@{/areas/{id}/edit(id=${area.id})}" class="btn btn-secondary">Edit Area</a>
+                    <form th:action="@{/areas/{id}/delete(id=${area.id})}" method="post" class="d-inline" data-confirm="Are you sure you want to delete this area?">
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card mb-4">
+                        <div class="card-header">Basic Info</div>
+                        <div class="card-body">
+                            <p><strong>Code:</strong> <span th:text="${area.areaCode}"></span></p>
+                            <p><strong>Type:</strong> <span th:text="${area.areaType}"></span></p>
+                            <p><strong>State:</strong> <span th:text="${area.state}"></span></p>
+                            <p><strong>Status:</strong> <span th:text="${area.status}"></span></p>
+                            <p><strong>Size:</strong> <span th:text="${area.totalAreaKm2}"></span> km²</p>
+                            <p><strong>Est. Date:</strong> <span th:text="${area.establishedDate}"></span></p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-8">
+                    <!-- Zones -->
+                    <div class="card mb-4">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <span>Zones</span>
+                            <a th:href="@{/zones/new(areaId=${area.id})}" class="btn btn-sm btn-light text-dark">Add Zone</a>
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-sm">
+                                <thead><tr><th>Code</th><th>Name</th><th>Type</th><th>Status</th><th>Actions</th></tr></thead>
+                                <tbody>
+                                    <tr th:each="zone : ${zones}">
+                                        <td th:text="${zone.zoneCode}"></td>
+                                        <td th:text="${zone.name}"></td>
+                                        <td th:text="${zone.zoneType}"></td>
+                                        <td th:text="${zone.status}"></td>
+                                        <td><a th:href="@{/zones/{id}(id=${zone.id})}" class="btn btn-sm btn-info text-white">View</a></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Habitats -->
+                    <div class="card mb-4">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <span>Habitats</span>
+                            <a href="/habitats/new" class="btn btn-sm btn-light text-dark">Add Habitat</a>
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-sm">
+                                <thead><tr><th>Type</th><th>Zone</th><th>Condition</th><th>Actions</th></tr></thead>
+                                <tbody>
+                                    <tr th:each="hab : ${habitats}">
+                                        <td th:text="${hab.habitatType}"></td>
+                                        <td th:text="${hab.zoneName}"></td>
+                                        <td th:text="${hab.condition}"></td>
+                                        <td><a th:href="@{/habitats/{id}/edit(id=${hab.id})}" class="btn btn-sm btn-secondary">Edit</a></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <!-- Water Sources -->
+                    <div class="card mb-4">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <span>Water Sources</span>
+                            <a href="/water-sources/new" class="btn btn-sm btn-light text-dark">Add Water Source</a>
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-sm">
+                                <thead><tr><th>Name</th><th>Type</th><th>Zone</th><th>Condition</th><th>Actions</th></tr></thead>
+                                <tbody>
+                                    <tr th:each="ws : ${waterSources}">
+                                        <td th:text="${ws.name}"></td>
+                                        <td th:text="${ws.sourceType}"></td>
+                                        <td th:text="${ws.zoneName}"></td>
+                                        <td th:text="${ws.condition}"></td>
+                                        <td><a th:href="@{/water-sources/{id}/edit(id=${ws.id})}" class="btn btn-sm btn-secondary">Edit</a></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div th:replace="~{fragments :: scripts}"></div>
+    <div th:replace="~{fragments :: custom-scripts}"></div>
+</body>
+</html>

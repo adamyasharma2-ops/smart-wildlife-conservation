@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Rescue Cases')}"></head>
+<body>
+    <div th:replace="~{fragments/layout :: sidebar}"></div>
+    
+    <div class="main-content">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>Rescue Cases</h2>
+            <a th:href="@{/rescues/new}" class="btn btn-primary"><i class="bi bi-plus-circle"></i> Add Rescue Case</a>
+        </div>
+        
+        <div class="card mb-4">
+            <div class="card-body">
+                <form th:action="@{/rescues}" method="get" class="row g-3 align-items-end">
+                    <div class="col-md-4">
+                        <label class="form-label">Filter by Status</label>
+                        <select name="status" class="form-select">
+                            <option value="">All Statuses</option>
+                            <option value="REPORTED" th:selected="${status == 'REPORTED'}">REPORTED</option>
+                            <option value="RESCUED" th:selected="${status == 'RESCUED'}">RESCUED</option>
+                            <option value="UNDER_TREATMENT" th:selected="${status == 'UNDER_TREATMENT'}">UNDER TREATMENT</option>
+                            <option value="REHABILITATION" th:selected="${status == 'REHABILITATION'}">REHABILITATION</option>
+                            <option value="TRANSFERRED" th:selected="${status == 'TRANSFERRED'}">TRANSFERRED</option>
+                            <option value="RELEASED" th:selected="${status == 'RELEASED'}">RELEASED</option>
+                            <option value="CLOSED" th:selected="${status == 'CLOSED'}">CLOSED</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <button type="submit" class="btn btn-secondary w-100">Filter</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Rescue Code</th>
+                                <th>Species</th>
+                                <th>Rescue Date/Time</th>
+                                <th>Location</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="c : ${cases}">
+                                <td th:text="${c.rescueCode}"></td>
+                                <td th:text="${c.animalSpecies}"></td>
+                                <td th:text="${#temporals.format(c.rescueDateTime, 'yyyy-MM-dd HH:mm')}"></td>
+                                <td th:text="${c.rescueLocation}"></td>
+                                <td>
+                                    <span class="badge bg-primary" th:if="${c.status == 'REPORTED' or c.status == 'RESCUED'}" th:text="${c.status}"></span>
+                                    <span class="badge bg-warning text-dark" th:if="${c.status == 'UNDER_TREATMENT' or c.status == 'REHABILITATION'}" th:text="${c.status}"></span>
+                                    <span class="badge bg-info text-white" th:if="${c.status == 'TRANSFERRED'}" th:text="${c.status}"></span>
+                                    <span class="badge bg-success" th:if="${c.status == 'RELEASED'}" th:text="${c.status}"></span>
+                                    <span class="badge bg-secondary" th:if="${c.status == 'CLOSED'}" th:text="${c.status}"></span>
+                                </td>
+                                <td>
+                                    <a th:href="@{/rescues/{id}(id=${c.id})}" class="btn btn-sm btn-info text-white">View</a>
+                                    <a th:href="@{/rescues/{id}/edit(id=${c.id})}" class="btn btn-sm btn-secondary">Edit</a>
+                                </td>
+                            </tr>
+                            <tr th:if="${#lists.isEmpty(cases)}">
+                                <td colspan="6" class="text-center">No rescue cases found</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div th:replace="~{fragments/layout :: scripts}"></div>
+</body>
+</html>

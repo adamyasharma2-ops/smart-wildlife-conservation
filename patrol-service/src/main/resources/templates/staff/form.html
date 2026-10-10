@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout :: head('Staff Form')}"></head>
+<body>
+<div class="d-flex">
+    <nav th:replace="~{layout :: sidebar('staff')}"></nav>
+    <div class="main-content flex-grow-1 p-4">
+        <h2 class="fw-bold text-success-emphasis mb-3">Register Field Staff</h2>
+        <div class="card shadow-sm border-0">
+            <div class="card-body p-4">
+                <form th:action="@{/staff}" th:object="${staff}" method="post">
+                    <div class="row g-3 mb-3">
+                        <div class="col-md-4">
+                            <label class="form-label fw-semibold">Staff ID *</label>
+                            <input type="text" class="form-control" th:field="*{staffId}" placeholder="ST-101" required>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label fw-semibold">First Name *</label>
+                            <input type="text" class="form-control" th:field="*{firstName}" required>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label fw-semibold">Last Name *</label>
+                            <input type="text" class="form-control" th:field="*{lastName}" required>
+                        </div>
+                    </div>
+                    <div class="row g-3 mb-3">
+                        <div class="col-md-4">
+                            <label class="form-label fw-semibold">Designation</label>
+                            <select class="form-select" th:field="*{designation}">
+                                <option value="FOREST_OFFICER">Forest Officer</option>
+                                <option value="RANGER">Ranger</option>
+                                <option value="GUARD">Guard</option>
+                                <option value="VETERINARIAN">Veterinarian</option>
+                                <option value="RESEARCHER">Researcher</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label fw-semibold">Team / Unit</label>
+                            <input type="text" class="form-control" th:field="*{team}" placeholder="Alpha Squad">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label fw-semibold">Assigned Protected Area</label>
+                            <input type="text" class="form-control" th:field="*{assignedAreaName}" placeholder="Jim Corbett National Park">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Save Staff Member</button>
+                    <a th:href="@{/staff}" class="btn btn-outline-secondary">Cancel</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

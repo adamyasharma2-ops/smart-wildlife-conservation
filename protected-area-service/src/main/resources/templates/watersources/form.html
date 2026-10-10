@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head(${waterSource.id == null ? 'New Water Source' : 'Edit Water Source'})}"></head>
+<body>
+    <div th:replace="~{fragments :: sidebar}"></div>
+    
+    <div class="main-content">
+        <div class="container-fluid">
+            <h2 class="mb-4" th:text="${waterSource.id == null ? 'Add New Water Source' : 'Edit Water Source'}"></h2>
+
+            <div class="card">
+                <div class="card-body">
+                    <form th:action="@{${waterSource.id == null ? '/water-sources' : '/water-sources/' + waterSource.id + '/edit'}}" th:object="${waterSource}" method="post">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Name</label>
+                                <input type="text" class="form-control" th:field="*{name}" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Source Type</label>
+                                <select class="form-select" th:field="*{sourceType}">
+                                    <option value="RIVER">River</option>
+                                    <option value="LAKE">Lake</option>
+                                    <option value="POND">Pond</option>
+                                    <option value="WATERHOLE">Waterhole</option>
+                                    <option value="STREAM">Stream</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Zone</label>
+                                <select class="form-select" th:field="*{zoneId}" required>
+                                    <option value="" disabled selected>Select Zone</option>
+                                    <option th:each="z : ${zones}" th:value="${z.id}" th:text="${z.name + ' (' + z.protectedAreaName + ')'}"></option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Condition</label>
+                                <select class="form-select" th:field="*{condition}">
+                                    <option value="GOOD">Good</option>
+                                    <option value="FAIR">Fair</option>
+                                    <option value="POLLUTED">Polluted</option>
+                                    <option value="DRY">Dry</option>
+                                    <option value="SEASONAL">Seasonal</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mt-3">
+                            <button type="submit" class="btn btn-primary">Save Water Source</button>
+                            <a href="/water-sources" class="btn btn-secondary">Cancel</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div th:replace="~{fragments :: scripts}"></div>
+</body>
+</html>

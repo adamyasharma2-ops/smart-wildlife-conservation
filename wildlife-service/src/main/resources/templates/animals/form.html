@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout :: head('Animal Record Form')}"></head>
+<body>
+<div class="d-flex">
+    <nav th:replace="~{layout :: sidebar('animals')}"></nav>
+    <div class="main-content flex-grow-1 p-4">
+        <div class="mb-4">
+            <h2 class="fw-bold text-success-emphasis mb-0" th:text="${animal.id == null ? 'Register New Animal' : 'Edit Animal Record'}">Animal Form</h2>
+            <small class="text-muted">Enter detailed animal biological and geographical identification</small>
+        </div>
+
+        <div class="card shadow-sm border-0">
+            <div class="card-body p-4">
+                <form th:action="${animal.id == null ? '/animals' : '/animals/' + animal.id + '/edit'}" th:object="${animal}" method="post">
+                    <div class="row g-3 mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Identification Tag ID *</label>
+                            <input type="text" class="form-control" th:field="*{tagId}" placeholder="e.g. WL-101" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Individual Name</label>
+                            <input type="text" class="form-control" th:field="*{name}" placeholder="e.g. Shera">
+                        </div>
+                    </div>
+                    <div class="row g-3 mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Species *</label>
+                            <select class="form-select" th:field="*{speciesId}" required>
+                                <option value="">-- Select Species --</option>
+                                <option th:each="s : ${speciesList}" th:value="${s.id}" th:text="${s.commonName + ' (' + s.scientificName + ')'}"></option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label fw-semibold">Sex</label>
+                            <select class="form-select" th:field="*{sex}">
+                                <option value="MALE">Male</option>
+                                <option value="FEMALE">Female</option>
+                                <option value="UNKNOWN">Unknown</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label fw-semibold">Estimated Age (Years)</label>
+                            <input type="number" class="form-control" th:field="*{estimatedAge}" min="0" max="100">
+                        </div>
+                    </div>
+                    <div class="row g-3 mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Health Status *</label>
+                            <select class="form-select" th:field="*{healthStatus}" required>
+                                <option value="HEALTHY">Healthy</option>
+                                <option value="INJURED">Injured</option>
+                                <option value="SICK">Sick</option>
+                                <option value="CRITICAL">Critical</option>
+                                <option value="DECEASED">Deceased</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Current Protected Area / Reserve</label>
+                            <input type="text" class="form-control" th:field="*{currentAreaName}" placeholder="e.g. Jim Corbett National Park">
+                        </div>
+                    </div>
+                    <div class="row g-3 mb-3">
+                        <div class="col-md-4">
+                            <label class="form-label fw-semibold">Latitude</label>
+                            <input type="number" step="0.0001" class="form-control" th:field="*{latitude}">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label fw-semibold">Longitude</label>
+                            <input type="number" step="0.0001" class="form-control" th:field="*{longitude}">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label fw-semibold">Last Observed Date</label>
+                            <input type="date" class="form-control" th:field="*{lastObservedDate}">
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <label class="form-label fw-semibold">Notes / Medical History</label>
+                        <textarea class="form-control" th:field="*{notes}" rows="3"></textarea>
+                    </div>
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="btn btn-primary"><i class="bi bi-check-circle me-1"></i>Save Animal Record</button>
+                        <a th:href="@{/animals}" class="btn btn-outline-secondary">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout :: head('Animal Details')}"></head>
+<body>
+<div class="d-flex">
+    <nav th:replace="~{layout :: sidebar('animals')}"></nav>
+    <div class="main-content flex-grow-1 p-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <h2 class="fw-bold text-success-emphasis mb-0"><span th:text="${animal.name}">Name</span> (<span th:text="${animal.tagId}">Tag</span>)</h2>
+                <small class="text-muted">Species: <span th:text="${animal.speciesName}">Species</span></small>
+            </div>
+            <div class="d-flex gap-2">
+                <a th:href="@{'/animals/' + ${animal.id} + '/edit'}" class="btn btn-outline-secondary"><i class="bi bi-pencil me-1"></i>Edit</a>
+                <form th:action="@{'/animals/' + ${animal.id} + '/delete'}" method="post" onsubmit="return confirm('Delete this animal record?');">
+                    <button type="submit" class="btn btn-outline-danger"><i class="bi bi-trash me-1"></i>Delete</button>
+                </form>
+                <a th:href="@{/animals}" class="btn btn-outline-dark">Back to List</a>
+            </div>
+        </div>
+
+        <div class="row g-3 mb-4">
+            <div class="col-md-6">
+                <div class="card shadow-sm border-0 h-100">
+                    <div class="card-header bg-white fw-bold py-3">Biological Attributes</div>
+                    <div class="card-body">
+                        <p><strong>Tag ID:</strong> <span th:text="${animal.tagId}"></span></p>
+                        <p><strong>Common Name:</strong> <span th:text="${animal.name}"></span></p>
+                        <p><strong>Species:</strong> <span th:text="${animal.speciesName}"></span></p>
+                        <p><strong>Sex:</strong> <span th:text="${animal.sex}"></span></p>
+                        <p><strong>Estimated Age:</strong> <span th:text="${animal.estimatedAge}"></span> years</p>
+                        <p><strong>Health Status:</strong> <span class="badge bg-success" th:text="${animal.healthStatus}"></span></p>
+                        <p><strong>Conservation Status:</strong> <span class="badge bg-secondary" th:text="${animal.conservationStatus}"></span></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card shadow-sm border-0 h-100">
+                    <div class="card-header bg-white fw-bold py-3">Geographical & Observation Records</div>
+                    <div class="card-body">
+                        <p><strong>Protected Area:</strong> <span th:text="${animal.currentAreaName}"></span></p>
+                        <p><strong>Coordinates:</strong> <span th:text="${animal.latitude + ', ' + animal.longitude}"></span></p>
+                        <p><strong>Last Observed:</strong> <span th:text="${animal.lastObservedDate}"></span></p>
+                        <p><strong>Notes:</strong> <span th:text="${animal.notes}"></span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Observations list -->
+        <div class="card shadow-sm border-0 mb-4">
+            <div class="card-header bg-white fw-bold py-3 d-flex justify-content-between align-items-center">
+                <span>Field Observations History</span>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Date</th>
+                            <th>Observer</th>
+                            <th>Location</th>
+                            <th>Behavior</th>
+                            <th>Health Note</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="obs : ${observations}">
+                            <td th:text="${obs.observationDate}"></td>
+                            <td th:text="${obs.observerName}"></td>
+                            <td th:text="${obs.location}"></td>
+                            <td th:text="${obs.behavior}"></td>
+                            <td th:text="${obs.healthNote}"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Add observation form -->
+        <div class="card shadow-sm border-0">
+            <div class="card-header bg-white fw-bold py-3">Record New Observation</div>
+            <div class="card-body p-4">
+                <form th:action="@{'/animals/' + ${animal.id} + '/observations'}" th:object="${newObservation}" method="post">
+                    <div class="row g-3 mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Observer Name *</label>
+                            <input type="text" class="form-control" th:field="*{observerName}" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Observation Date *</label>
+                            <input type="date" class="form-control" th:field="*{observationDate}" required>
+                        </div>
+                    </div>
+                    <div class="row g-3 mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Location / Description</label>
+                            <input type="text" class="form-control" th:field="*{location}">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Health Note</label>
+                            <input type="text" class="form-control" th:field="*{healthNote}">
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Observed Behavior</label>
+                        <textarea class="form-control" th:field="*{behavior}" rows="2"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-success"><i class="bi bi-plus-circle me-1"></i>Save Observation</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

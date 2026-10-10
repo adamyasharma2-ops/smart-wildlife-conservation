@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Rescue Case Details')}"></head>
+<body>
+    <div th:replace="~{fragments/layout :: sidebar}"></div>
+    
+    <div class="main-content">
+        <div class="mb-4">
+            <a th:href="@{/rescues}" class="text-decoration-none"><i class="bi bi-arrow-left"></i> Back to Rescue Cases</a>
+            <h2 class="mt-2" th:text="'Rescue Case: ' + ${rescueCase.rescueCode}"></h2>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-8">
+                <div class="card mb-4">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">Information</h5>
+                        <a th:href="@{/rescues/{id}/edit(id=${rescueCase.id})}" class="btn btn-sm btn-outline-primary">Edit</a>
+                    </div>
+                    <div class="card-body">
+                        <div class="row mb-3">
+                            <div class="col-md-4 text-muted">Species / Animal ID</div>
+                            <div class="col-md-8" th:text="${rescueCase.animalSpecies} + (${rescueCase.animalId != null ? ' (ID: ' + rescueCase.animalId + ')' : ''})"></div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-4 text-muted">Status</div>
+                            <div class="col-md-8">
+                                <span class="badge bg-primary" th:text="${rescueCase.status}"></span>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-4 text-muted">Rescue Date/Time</div>
+                            <div class="col-md-8" th:text="${#temporals.format(rescueCase.rescueDateTime, 'yyyy-MM-dd HH:mm')}"></div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-4 text-muted">Rescue Location</div>
+                            <div class="col-md-8" th:text="${rescueCase.rescueLocation}"></div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-4 text-muted">Initial Condition</div>
+                            <div class="col-md-8" th:text="${rescueCase.initialCondition}"></div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-4 text-muted">Rescue Team</div>
+                            <div class="col-md-8" th:text="${rescueCase.rescueTeam}"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card mb-4" th:if="${rescueCase.treatmentDetails != null}">
+                    <div class="card-header">
+                        <h5 class="mb-0">Treatment & Rehabilitation</h5>
+                    </div>
+                    <div class="card-body">
+                        <pre class="mb-0" style="white-space: pre-wrap; font-family: inherit;" th:text="${rescueCase.treatmentDetails}"></pre>
+                    </div>
+                </div>
+                
+                <div class="card mb-4" th:if="${rescueCase.transferLocation != null or rescueCase.releaseLocation != null}">
+                    <div class="card-header">
+                        <h5 class="mb-0">Outcome Details</h5>
+                    </div>
+                    <div class="card-body">
+                        <div th:if="${rescueCase.transferLocation != null}" class="mb-3">
+                            <strong>Transferred To:</strong> <span th:text="${rescueCase.transferLocation}"></span><br>
+                            <strong>Date:</strong> <span th:text="${#temporals.format(rescueCase.transferDateTime, 'yyyy-MM-dd HH:mm')}"></span>
+                        </div>
+                        <div th:if="${rescueCase.releaseLocation != null}">
+                            <strong>Released At:</strong> <span th:text="${rescueCase.releaseLocation}"></span><br>
+                            <strong>Date:</strong> <span th:text="${#temporals.format(rescueCase.releaseDateTime, 'yyyy-MM-dd HH:mm')}"></span><br>
+                            <strong>Outcome:</strong> <span th:text="${rescueCase.outcome}"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4">
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5 class="mb-0">Update Status</h5>
+                    </div>
+                    <div class="card-body">
+                        <form th:action="@{/rescues/{id}/status(id=${rescueCase.id})}" method="post">
+                            <div class="mb-3">
+                                <label class="form-label">New Status</label>
+                                <select name="status" class="form-select" required>
+                                    <option value="REPORTED" th:selected="${rescueCase.status == 'REPORTED'}">REPORTED</option>
+                                    <option value="RESCUED" th:selected="${rescueCase.status == 'RESCUED'}">RESCUED</option>
+                                    <option value="UNDER_TREATMENT" th:selected="${rescueCase.status == 'UNDER_TREATMENT'}">UNDER TREATMENT</option>
+                                    <option value="REHABILITATION" th:selected="${rescueCase.status == 'REHABILITATION'}">REHABILITATION</option>
+                                    <option value="CLOSED" th:selected="${rescueCase.status == 'CLOSED'}">CLOSED</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100">Update Status</button>
+                        </form>
+                    </div>
+                </div>
+                
+                <div class="card mb-4" th:if="${rescueCase.status != 'RELEASED' and rescueCase.status != 'TRANSFERRED' and rescueCase.status != 'CLOSED'}">
+                    <div class="card-header bg-info text-white">
+                        <h5 class="mb-0">Transfer</h5>
+                    </div>
+                    <div class="card-body">
+                        <form th:action="@{/rescues/{id}/transfer(id=${rescueCase.id})}" method="post">
+                            <div class="mb-3">
+                                <label class="form-label">Transfer Location / Facility</label>
+                                <input type="text" name="transferLocation" class="form-control" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Date & Time</label>
+                                <input type="datetime-local" name="transferDateTime" class="form-control">
+                            </div>
+                            <button type="submit" class="btn btn-info text-white w-100">Record Transfer</button>
+                        </form>
+                    </div>
+                </div>
+                
+                <div class="card mb-4" th:if="${rescueCase.status != 'RELEASED' and rescueCase.status != 'CLOSED'}">
+                    <div class="card-header bg-success text-white">
+                        <h5 class="mb-0">Release</h5>
+                    </div>
+                    <div class="card-body">
+                        <form th:action="@{/rescues/{id}/release(id=${rescueCase.id})}" method="post">
+                            <div class="mb-3">
+                                <label class="form-label">Release Location</label>
+                                <input type="text" name="releaseLocation" class="form-control" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Outcome Notes</label>
+                                <textarea name="outcome" class="form-control" rows="2" required></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Date & Time</label>
+                                <input type="datetime-local" name="releaseDateTime" class="form-control">
+                            </div>
+                            <button type="submit" class="btn btn-success w-100">Record Release</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div th:replace="~{fragments/layout :: scripts}"></div>
+</body>
+</html>

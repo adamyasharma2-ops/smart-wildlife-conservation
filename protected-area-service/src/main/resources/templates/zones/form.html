@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head(${zone.id == null ? 'New Zone' : 'Edit Zone'})}"></head>
+<body>
+    <div th:replace="~{fragments :: sidebar}"></div>
+    
+    <div class="main-content">
+        <div class="container-fluid">
+            <h2 class="mb-4" th:text="${zone.id == null ? 'Add New Zone' : 'Edit Zone'}"></h2>
+
+            <div class="card">
+                <div class="card-body">
+                    <form th:action="@{${zone.id == null ? '/zones' : '/zones/' + zone.id + '/edit'}}" th:object="${zone}" method="post">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Zone Code</label>
+                                <input type="text" class="form-control" th:field="*{zoneCode}" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Name</label>
+                                <input type="text" class="form-control" th:field="*{name}" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Protected Area</label>
+                                <select class="form-select" th:field="*{protectedAreaId}" required>
+                                    <option value="" disabled selected>Select Area</option>
+                                    <option th:each="pa : ${areas}" th:value="${pa.id}" th:text="${pa.name}"></option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Zone Type</label>
+                                <select class="form-select" th:field="*{zoneType}">
+                                    <option value="CORE">Core</option>
+                                    <option value="BUFFER">Buffer</option>
+                                    <option value="TRANSITION">Transition</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Status</label>
+                                <select class="form-select" th:field="*{status}">
+                                    <option value="ACTIVE">Active</option>
+                                    <option value="INACTIVE">Inactive</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mt-3">
+                            <button type="submit" class="btn btn-primary">Save Zone</button>
+                            <a href="/zones" class="btn btn-secondary">Cancel</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div th:replace="~{fragments :: scripts}"></div>
+</body>
+</html>

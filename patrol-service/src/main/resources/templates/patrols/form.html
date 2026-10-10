@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout :: head('Schedule Patrol')}"></head>
+<body>
+<div class="d-flex">
+    <nav th:replace="~{layout :: sidebar('patrols')}"></nav>
+    <div class="main-content flex-grow-1 p-4">
+        <h2 class="fw-bold text-success-emphasis mb-3">Schedule New Patrol Plan</h2>
+        <div class="card shadow-sm border-0">
+            <div class="card-body p-4">
+                <form th:action="@{/patrols}" th:object="${patrol}" method="post">
+                    <div class="row g-3 mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Patrol Identifier Code *</label>
+                            <input type="text" class="form-control" th:field="*{patrolId}" placeholder="e.g. PTR-101" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Protected Area Name</label>
+                            <input type="text" class="form-control" th:field="*{protectedAreaName}" placeholder="Jim Corbett National Park">
+                        </div>
+                    </div>
+                    <div class="row g-3 mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Assigned Zone Name</label>
+                            <input type="text" class="form-control" th:field="*{zoneName}" placeholder="Dhikala Core Zone">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Planned Start Time *</label>
+                            <input type="datetime-local" class="form-control" th:field="*{plannedStartTime}" required>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Route Description / Waypoints</label>
+                        <textarea class="form-control" th:field="*{routeDescription}" rows="3"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Save Patrol Plan</button>
+                    <a th:href="@{/patrols}" class="btn btn-outline-secondary">Cancel</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

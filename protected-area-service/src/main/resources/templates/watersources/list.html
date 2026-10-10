@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Water Sources')}"></head>
+<body>
+    <div th:replace="~{fragments :: sidebar}"></div>
+    
+    <div class="main-content">
+        <div class="container-fluid">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2>Water Sources</h2>
+                <a href="/water-sources/new" class="btn btn-primary">Add Water Source</a>
+            </div>
+
+            <div class="card">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Type</th>
+                                    <th>Zone</th>
+                                    <th>Protected Area</th>
+                                    <th>Condition</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="ws : ${waterSources}">
+                                    <td th:text="${ws.name}"></td>
+                                    <td th:text="${ws.sourceType}"></td>
+                                    <td th:text="${ws.zoneName}"></td>
+                                    <td th:text="${ws.protectedAreaName}"></td>
+                                    <td>
+                                        <span class="badge" th:classappend="${ws.condition == 'GOOD' ? 'bg-success' : 'bg-warning'}"
+                                              th:text="${ws.condition}">GOOD</span>
+                                    </td>
+                                    <td>
+                                        <a th:href="@{/water-sources/{id}/edit(id=${ws.id})}" class="btn btn-sm btn-secondary">Edit</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div th:replace="~{fragments :: scripts}"></div>
+</body>
+</html>

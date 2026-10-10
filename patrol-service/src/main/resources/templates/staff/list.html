@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout :: head('Field Staff Records')}"></head>
+<body>
+<div class="d-flex">
+    <nav th:replace="~{layout :: sidebar('staff')}"></nav>
+    <div class="main-content flex-grow-1 p-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <h2 class="fw-bold text-success-emphasis mb-0">Field Staff Directory</h2>
+                <small class="text-muted">Manage Forest Rangers, Wildlife Officers & Field Unit Personnel</small>
+            </div>
+            <a th:href="@{/staff/new}" class="btn btn-primary"><i class="bi bi-person-plus me-1"></i>Register Staff</a>
+        </div>
+        <div class="card shadow-sm border-0">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="table-light">
+                        <tr><th>Staff ID</th><th>Name</th><th>Designation</th><th>Team</th><th>Availability</th><th>Assigned Area</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="s : ${staffList}">
+                            <td><span class="badge bg-dark" th:text="${s.staffId}"></span></td>
+                            <td class="fw-bold" th:text="${s.fullName}"></td>
+                            <td th:text="${s.designation}"></td>
+                            <td th:text="${s.team}"></td>
+                            <td><span class="badge" th:classappend="${s.availability == 'AVAILABLE' ? 'bg-success' : 'bg-warning text-dark'}" th:text="${s.availability}"></span></td>
+                            <td th:text="${s.assignedAreaName}"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

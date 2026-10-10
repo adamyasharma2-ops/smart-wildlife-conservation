@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Incidents')}"></head>
+<body>
+    <div th:replace="~{fragments/layout :: sidebar}"></div>
+    
+    <div class="main-content">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>Incident Management</h2>
+            <a th:href="@{/incidents/new}" class="btn btn-primary"><i class="bi bi-plus-circle"></i> Add Incident</a>
+        </div>
+        
+        <div class="card mb-4">
+            <div class="card-body">
+                <form th:action="@{/incidents}" method="get" class="row g-3">
+                    <div class="col-md-2">
+                        <label class="form-label">Zone ID</label>
+                        <input type="text" class="form-control" name="zoneId" th:value="${zoneId}">
+                    </div>
+                    <div class="col-md-2">
+                        <label class="form-label">Severity</label>
+                        <select name="severity" class="form-select">
+                            <option value="">All</option>
+                            <option value="LOW" th:selected="${severity == 'LOW'}">LOW</option>
+                            <option value="MEDIUM" th:selected="${severity == 'MEDIUM'}">MEDIUM</option>
+                            <option value="HIGH" th:selected="${severity == 'HIGH'}">HIGH</option>
+                            <option value="CRITICAL" th:selected="${severity == 'CRITICAL'}">CRITICAL</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <label class="form-label">Type</label>
+                        <select name="type" class="form-select">
+                            <option value="">All</option>
+                            <option value="WILDLIFE_INJURY" th:selected="${type == 'WILDLIFE_INJURY'}">WILDLIFE INJURY</option>
+                            <option value="HUMAN_WILDLIFE_CONFLICT" th:selected="${type == 'HUMAN_WILDLIFE_CONFLICT'}">HUMAN WILDLIFE CONFLICT</option>
+                            <option value="POACHING" th:selected="${type == 'POACHING'}">POACHING</option>
+                            <option value="ILLEGAL_ACTIVITY" th:selected="${type == 'ILLEGAL_ACTIVITY'}">ILLEGAL ACTIVITY</option>
+                            <option value="HABITAT_DESTRUCTION" th:selected="${type == 'HABITAT_DESTRUCTION'}">HABITAT DESTRUCTION</option>
+                            <option value="FIRE" th:selected="${type == 'FIRE'}">FIRE</option>
+                            <option value="DISEASE_OUTBREAK" th:selected="${type == 'DISEASE_OUTBREAK'}">DISEASE OUTBREAK</option>
+                            <option value="OTHER" th:selected="${type == 'OTHER'}">OTHER</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <label class="form-label">Status</label>
+                        <select name="status" class="form-select">
+                            <option value="">All</option>
+                            <option value="REPORTED" th:selected="${status == 'REPORTED'}">REPORTED</option>
+                            <option value="UNDER_INVESTIGATION" th:selected="${status == 'UNDER_INVESTIGATION'}">UNDER INVESTIGATION</option>
+                            <option value="IN_PROGRESS" th:selected="${status == 'IN_PROGRESS'}">IN PROGRESS</option>
+                            <option value="RESOLVED" th:selected="${status == 'RESOLVED'}">RESOLVED</option>
+                            <option value="CLOSED" th:selected="${status == 'CLOSED'}">CLOSED</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <label class="form-label">From Date</label>
+                        <input type="date" class="form-control" name="fromDate" th:value="${fromDate}">
+                    </div>
+                    <div class="col-md-2">
+                        <label class="form-label">To Date</label>
+                        <input type="date" class="form-control" name="toDate" th:value="${toDate}">
+                    </div>
+                    <div class="col-12 text-end">
+                        <button type="submit" class="btn btn-secondary">Filter</button>
+                        <a th:href="@{/incidents}" class="btn btn-outline-secondary">Reset</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Code</th>
+                                <th>Type</th>
+                                <th>Severity</th>
+                                <th>Status</th>
+                                <th>Location/Zone</th>
+                                <th>Reported At</th>
+                                <th>Personnel</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="incident : ${incidents}">
+                                <td th:text="${incident.incidentCode}"></td>
+                                <td th:text="${incident.incidentType}"></td>
+                                <td>
+                                    <span th:if="${incident.severity == 'LOW'}" class="badge bg-success">LOW</span>
+                                    <span th:if="${incident.severity == 'MEDIUM'}" class="badge bg-warning text-dark">MEDIUM</span>
+                                    <span th:if="${incident.severity == 'HIGH'}" class="badge bg-orange" style="background-color: #fd7e14;">HIGH</span>
+                                    <span th:if="${incident.severity == 'CRITICAL'}" class="badge bg-danger">CRITICAL</span>
+                                </td>
+                                <td>
+                                    <span th:if="${incident.status == 'REPORTED'}" class="badge bg-primary">REPORTED</span>
+                                    <span th:if="${incident.status == 'UNDER_INVESTIGATION'}" class="badge" style="background-color: purple;">UNDER INVESTIGATION</span>
+                                    <span th:if="${incident.status == 'IN_PROGRESS'}" class="badge bg-warning text-dark">IN PROGRESS</span>
+                                    <span th:if="${incident.status == 'RESOLVED'}" class="badge bg-success">RESOLVED</span>
+                                    <span th:if="${incident.status == 'CLOSED'}" class="badge bg-secondary">CLOSED</span>
+                                </td>
+                                <td>
+                                    <span th:text="${incident.zoneName != null ? incident.zoneName : 'Zone ' + incident.zoneId}"></span>
+                                </td>
+                                <td th:text="${#temporals.format(incident.reportedAt, 'yyyy-MM-dd HH:mm')}"></td>
+                                <td th:text="${incident.assignedPersonnelName}"></td>
+                                <td>
+                                    <a th:href="@{/incidents/{id}(id=${incident.id})}" class="btn btn-sm btn-info text-white">View</a>
+                                    <a th:href="@{/incidents/{id}/edit(id=${incident.id})}" class="btn btn-sm btn-secondary">Edit</a>
+                                </td>
+                            </tr>
+                            <tr th:if="${#lists.isEmpty(incidents)}">
+                                <td colspan="8" class="text-center">No incidents found</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div th:replace="~{fragments/layout :: scripts}"></div>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout :: head('Species Details')}"></head>
+<body>
+<div class="d-flex">
+    <nav th:replace="~{layout :: sidebar('species')}"></nav>
+    <div class="main-content flex-grow-1 p-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <h2 class="fw-bold text-success-emphasis mb-0" th:text="${species.commonName}">Species</h2>
+                <small class="text-muted fst-italic" th:text="${species.scientificName}">Scientific</small>
+            </div>
+            <div class="d-flex gap-2">
+                <a th:href="@{'/species/' + ${species.id} + '/edit'}" class="btn btn-outline-secondary">Edit</a>
+                <a th:href="@{/species}" class="btn btn-outline-dark">Back</a>
+            </div>
+        </div>
+        <div class="card shadow-sm border-0 mb-4">
+            <div class="card-body">
+                <p><strong>Conservation Status:</strong> <span class="badge bg-danger" th:text="${species.conservationStatus}"></span></p>
+                <p><strong>Habitat:</strong> <span th:text="${species.habitat}"></span></p>
+                <p><strong>Description:</strong> <span th:text="${species.description}"></span></p>
+            </div>
+        </div>
+        <div class="card shadow-sm border-0">
+            <div class="card-header bg-white fw-bold py-3">Registered Animals of this Species</div>
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="table-light">
+                        <tr><th>Tag ID</th><th>Name</th><th>Sex</th><th>Health</th><th>Area</th><th>Action</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="a : ${animals}">
+                            <td><span class="badge bg-dark" th:text="${a.tagId}"></span></td>
+                            <td th:text="${a.name}"></td>
+                            <td th:text="${a.sex}"></td>
+                            <td><span class="badge bg-success" th:text="${a.healthStatus}"></span></td>
+                            <td th:text="${a.currentAreaName}"></td>
+                            <td><a th:href="@{'/animals/' + ${a.id}}" class="btn btn-sm btn-outline-primary">View</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
