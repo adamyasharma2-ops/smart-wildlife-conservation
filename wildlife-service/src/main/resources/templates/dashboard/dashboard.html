@@ -9,11 +9,11 @@
         <!-- Header -->
         <div class="flex items-center justify-between pb-5 mb-6 border-b border-slate-200">
             <div>
-                <h1 class="text-xl font-bold text-navy-900 tracking-tight">Operations Dashboard</h1>
+                <h1 class="text-xl font-bold text-slate-900 tracking-tight">Operations Dashboard</h1>
                 <p class="text-xs text-slate-500 mt-0.5">Central Management & Monitoring System</p>
             </div>
             <div class="flex items-center gap-2">
-                <a th:href="@{/animals/new}" class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-white bg-navy-900 hover:bg-navy-800 rounded-md transition duration-150">
+                <a th:href="@{/animals/new}" class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-white bg-blue-800 hover:bg-blue-900 rounded-md transition duration-150">
                     <i class="bi bi-plus-lg"></i>
                     <span>Add Animal</span>
                 </a>
@@ -30,14 +30,14 @@
             <div class="bg-white p-4 rounded-lg border border-slate-200 shadow-sm flex flex-col justify-between">
                 <div>
                     <div class="flex items-center justify-between mb-2">
-                        <span class="text-xs font-mono font-semibold text-slate-500">:8081</span>
+                        <span class="text-xs font-semibold text-blue-800">Wildlife Module</span>
                         <i class="bi bi-flower1 text-slate-400"></i>
                     </div>
-                    <div class="text-sm font-semibold text-navy-900">Wildlife Core</div>
+                    <div class="text-sm font-semibold text-slate-900">Wildlife Records</div>
                     <p class="text-xs text-slate-500 mt-1 mb-4">Species catalogue and animal records.</p>
                 </div>
                 <div class="flex items-center gap-2 pt-2 border-t border-slate-100">
-                    <a href="http://localhost:8081/animals" class="text-xs font-medium text-navy-900 hover:text-navy-700">Animals &rarr;</a>
+                    <a href="http://localhost:8081/animals" class="text-xs font-medium text-blue-800 hover:text-blue-900">Animals &rarr;</a>
                     <span class="text-slate-300">&bull;</span>
                     <a href="http://localhost:8081/species" class="text-xs text-slate-500 hover:text-slate-700">Species</a>
                 </div>
@@ -47,14 +47,14 @@
             <div class="bg-white p-4 rounded-lg border border-slate-200 shadow-sm flex flex-col justify-between">
                 <div>
                     <div class="flex items-center justify-between mb-2">
-                        <span class="text-xs font-mono font-semibold text-slate-500">:8082</span>
+                        <span class="text-xs font-semibold text-blue-800">Protected Areas</span>
                         <i class="bi bi-geo-alt text-slate-400"></i>
                     </div>
-                    <div class="text-sm font-semibold text-navy-900">Protected Areas</div>
+                    <div class="text-sm font-semibold text-slate-900">Reserves & Habitats</div>
                     <p class="text-xs text-slate-500 mt-1 mb-4">Reserves, zones, and water sources.</p>
                 </div>
                 <div class="flex items-center gap-2 pt-2 border-t border-slate-100">
-                    <a href="http://localhost:8082/areas" class="text-xs font-medium text-navy-900 hover:text-navy-700">Reserves &rarr;</a>
+                    <a href="http://localhost:8082/areas" class="text-xs font-medium text-blue-800 hover:text-blue-900">Reserves &rarr;</a>
                     <span class="text-slate-300">&bull;</span>
                     <a href="http://localhost:8082/zones" class="text-xs text-slate-500 hover:text-slate-700">Zones</a>
                 </div>
@@ -64,14 +64,14 @@
             <div class="bg-white p-4 rounded-lg border border-slate-200 shadow-sm flex flex-col justify-between">
                 <div>
                     <div class="flex items-center justify-between mb-2">
-                        <span class="text-xs font-mono font-semibold text-slate-500">:8083</span>
+                        <span class="text-xs font-semibold text-blue-800">Patrol Operations</span>
                         <i class="bi bi-compass text-slate-400"></i>
                     </div>
-                    <div class="text-sm font-semibold text-navy-900">Patrol Operations</div>
+                    <div class="text-sm font-semibold text-slate-900">Field Squads & Gear</div>
                     <p class="text-xs text-slate-500 mt-1 mb-4">Field schedules, rangers, and vehicles.</p>
                 </div>
                 <div class="flex items-center gap-2 pt-2 border-t border-slate-100">
-                    <a href="http://localhost:8083/patrols" class="text-xs font-medium text-navy-900 hover:text-navy-700">Patrols &rarr;</a>
+                    <a href="http://localhost:8083/patrols" class="text-xs font-medium text-blue-800 hover:text-blue-900">Patrols &rarr;</a>
                     <span class="text-slate-300">&bull;</span>
                     <a href="http://localhost:8083/staff" class="text-xs text-slate-500 hover:text-slate-700">Staff</a>
                 </div>
@@ -81,14 +81,14 @@
             <div class="bg-white p-4 rounded-lg border border-slate-200 shadow-sm flex flex-col justify-between">
                 <div>
                     <div class="flex items-center justify-between mb-2">
-                        <span class="text-xs font-mono font-semibold text-slate-500">:8084</span>
+                        <span class="text-xs font-semibold text-blue-800">Threat Monitoring</span>
                         <i class="bi bi-exclamation-triangle text-slate-400"></i>
                     </div>
-                    <div class="text-sm font-semibold text-navy-900">Incidents & Threats</div>
+                    <div class="text-sm font-semibold text-slate-900">Incidents & Rescues</div>
                     <p class="text-xs text-slate-500 mt-1 mb-4">Emergency alerts, rescues, and programmes.</p>
                 </div>
                 <div class="flex items-center gap-2 pt-2 border-t border-slate-100">
-                    <a href="http://localhost:8084/incidents" class="text-xs font-medium text-navy-900 hover:text-navy-700">Incidents &rarr;</a>
+                    <a href="http://localhost:8084/incidents" class="text-xs font-medium text-blue-800 hover:text-blue-900">Incidents &rarr;</a>
                     <span class="text-slate-300">&bull;</span>
                     <a href="http://localhost:8084/rescues" class="text-xs text-slate-500 hover:text-slate-700">Rescues</a>
                 </div>
@@ -99,13 +99,13 @@
         <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
             <div class="bg-white p-4 rounded-lg border border-slate-200">
                 <span class="text-xs font-medium text-slate-500 uppercase tracking-wider">Registered Animals</span>
-                <div class="text-2xl font-bold text-navy-900 mt-1" th:text="${data.totalAnimals}">0</div>
+                <div class="text-2xl font-bold text-slate-900 mt-1" th:text="${data.totalAnimals}">0</div>
                 <span class="text-xs text-slate-400"><span th:text="${data.totalSpecies}">0</span> Species Catalogued</span>
             </div>
 
             <div class="bg-white p-4 rounded-lg border border-slate-200">
                 <span class="text-xs font-medium text-slate-500 uppercase tracking-wider">Monitored Healthy</span>
-                <div class="text-2xl font-bold text-navy-900 mt-1" th:text="${data.healthyAnimals}">0</div>
+                <div class="text-2xl font-bold text-slate-900 mt-1" th:text="${data.healthyAnimals}">0</div>
                 <span class="text-xs text-slate-400">Active in Sanctuary Zones</span>
             </div>
 
@@ -116,30 +116,30 @@
             </div>
 
             <div class="bg-white p-4 rounded-lg border border-slate-200">
-                <span class="text-xs font-medium text-slate-500 uppercase tracking-wider">Active Incidents (:8084)</span>
-                <div class="text-2xl font-bold text-navy-900 mt-1" th:text="${data.unresolvedIncidents}">0</div>
+                <span class="text-xs font-medium text-slate-500 uppercase tracking-wider">Active Threat Incidents</span>
+                <div class="text-2xl font-bold text-slate-900 mt-1" th:text="${data.unresolvedIncidents}">0</div>
                 <span class="text-xs text-slate-400">Critical Alerts: <span th:text="${data.criticalIncidents}">0</span></span>
             </div>
         </div>
 
-        <!-- Service Connectivity Status Strip -->
+        <!-- System Node Health -->
         <div class="bg-white p-4 rounded-lg border border-slate-200 mb-6">
-            <div class="text-xs font-semibold text-slate-700 uppercase tracking-wider mb-3">Microservice Health Status</div>
+            <div class="text-xs font-semibold text-slate-700 uppercase tracking-wider mb-3">System Services Status</div>
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
                 <div class="p-2 bg-slate-50 rounded border border-slate-100">
-                    <div class="text-xs font-semibold text-navy-900">Wildlife (:8081)</div>
+                    <div class="text-xs font-semibold text-slate-900">Wildlife Service</div>
                     <div class="text-xs text-slate-500 mt-0.5">ONLINE</div>
                 </div>
                 <div class="p-2 bg-slate-50 rounded border border-slate-100">
-                    <div class="text-xs font-semibold text-navy-900">Areas (:8082)</div>
+                    <div class="text-xs font-semibold text-slate-900">Protected Areas</div>
                     <div class="text-xs text-slate-500 mt-0.5"><span th:text="${data.totalAreas}">0</span> Areas, <span th:text="${data.totalZones}">0</span> Zones</div>
                 </div>
                 <div class="p-2 bg-slate-50 rounded border border-slate-100">
-                    <div class="text-xs font-semibold text-navy-900">Patrols (:8083)</div>
+                    <div class="text-xs font-semibold text-slate-900">Patrol Operations</div>
                     <div class="text-xs text-slate-500 mt-0.5"><span th:text="${data.activePatrols}">0</span> Active Patrols</div>
                 </div>
                 <div class="p-2 bg-slate-50 rounded border border-slate-100">
-                    <div class="text-xs font-semibold text-navy-900">Incidents (:8084)</div>
+                    <div class="text-xs font-semibold text-slate-900">Incident Service</div>
                     <div class="text-xs text-slate-500 mt-0.5"><span th:text="${data.unresolvedIncidents}">0</span> Active Reports</div>
                 </div>
             </div>
@@ -149,7 +149,7 @@
         <div class="bg-white rounded-lg border border-slate-200 overflow-hidden">
             <div class="p-4 border-b border-slate-200 flex items-center justify-between">
                 <span class="text-xs font-semibold text-slate-700 uppercase tracking-wider">Recent Field Observations</span>
-                <a th:href="@{/animals}" class="text-xs text-navy-900 hover:underline">View All &rarr;</a>
+                <a th:href="@{/animals}" class="text-xs text-blue-800 hover:underline">View All &rarr;</a>
             </div>
             <div class="table-responsive">
                 <table class="table align-middle mb-0">
@@ -165,7 +165,7 @@
                     </thead>
                     <tbody>
                         <tr th:each="obs : ${data.recentObservations}">
-                            <td><span class="font-mono text-xs font-semibold text-navy-900" th:text="${obs.animalTagId}">TAG</span></td>
+                            <td><span class="font-mono text-xs font-semibold text-slate-900" th:text="${obs.animalTagId}">TAG</span></td>
                             <td class="font-medium text-slate-800" th:text="${obs.observerName}">Observer</td>
                             <td class="text-slate-500" th:text="${obs.observationDate}">Date</td>
                             <td class="text-slate-600" th:text="${obs.location}">Location</td>
