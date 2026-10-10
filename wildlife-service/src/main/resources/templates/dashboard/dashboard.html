@@ -1,186 +1,158 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{layout :: head('Operations Command Dashboard')}"></head>
-<body>
+<body class="bg-slate-50">
 <div class="d-flex">
     <nav th:replace="~{layout :: sidebar('dashboard')}"></nav>
-    <div class="main-content flex-grow-1 p-4">
+    <div class="main-content flex-grow-1 p-6">
         
         <!-- Header -->
-        <div class="d-flex justify-content-between align-items-center mb-4">
+        <div class="flex items-center justify-between pb-5 mb-6 border-b border-slate-200">
             <div>
-                <h3 class="fw-bold mb-0" style="color: #0f1c3f;">Operations Dashboard</h3>
-                <small class="text-secondary">Protected Area Governance & Wildlife Management Network</small>
+                <h1 class="text-xl font-bold text-navy-900 tracking-tight">Operations Dashboard</h1>
+                <p class="text-xs text-slate-500 mt-0.5">Central Management & Monitoring System</p>
             </div>
-            <div class="d-flex gap-2">
-                <a th:href="@{/animals/new}" class="btn btn-primary"><i class="bi bi-plus-lg me-1"></i>Add Animal</a>
-                <a href="http://localhost:8084/incidents/report" class="btn btn-outline-primary"><i class="bi bi-file-earmark-bar-graph me-1"></i>Monthly Report</a>
+            <div class="flex items-center gap-2">
+                <a th:href="@{/animals/new}" class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-white bg-navy-900 hover:bg-navy-800 rounded-md transition duration-150">
+                    <i class="bi bi-plus-lg"></i>
+                    <span>Add Animal</span>
+                </a>
+                <a href="http://localhost:8084/incidents/report" class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-slate-700 bg-white hover:bg-slate-50 border border-slate-200 rounded-md transition duration-150">
+                    <i class="bi bi-file-earmark-text"></i>
+                    <span>Monthly Report</span>
+                </a>
             </div>
         </div>
 
-        <!-- Microservice Navigation Cards -->
-        <div class="row g-3 mb-4">
-            <!-- 1. Wildlife -->
-            <div class="col-md-3">
-                <div class="card h-100 shadow-sm border" style="border-top: 3px solid #1e3a8a !important;">
-                    <div class="card-body d-flex flex-column justify-content-between">
-                        <div>
-                            <div class="d-flex align-items-center justify-content-between mb-2">
-                                <span class="badge bg-light text-primary border fw-semibold">:8081</span>
-                                <i class="bi bi-flower1 text-primary fs-5"></i>
-                            </div>
-                            <h6 class="fw-bold mb-1" style="color: #0f1c3f;">Wildlife Service</h6>
-                            <p class="text-muted small mb-3">Animal health records, census numbers and species classification catalogue.</p>
-                        </div>
-                        <div class="d-flex gap-2">
-                            <a href="http://localhost:8081/animals" class="btn btn-sm btn-outline-primary flex-grow-1">Animals</a>
-                            <a href="http://localhost:8081/species" class="btn btn-sm btn-outline-secondary">Species</a>
-                        </div>
+        <!-- Microservices Overview Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+            <!-- Wildlife -->
+            <div class="bg-white p-4 rounded-lg border border-slate-200 shadow-sm flex flex-col justify-between">
+                <div>
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-xs font-mono font-semibold text-slate-500">:8081</span>
+                        <i class="bi bi-flower1 text-slate-400"></i>
                     </div>
+                    <div class="text-sm font-semibold text-navy-900">Wildlife Core</div>
+                    <p class="text-xs text-slate-500 mt-1 mb-4">Species catalogue and animal records.</p>
+                </div>
+                <div class="flex items-center gap-2 pt-2 border-t border-slate-100">
+                    <a href="http://localhost:8081/animals" class="text-xs font-medium text-navy-900 hover:text-navy-700">Animals &rarr;</a>
+                    <span class="text-slate-300">&bull;</span>
+                    <a href="http://localhost:8081/species" class="text-xs text-slate-500 hover:text-slate-700">Species</a>
                 </div>
             </div>
 
-            <!-- 2. Protected Area -->
-            <div class="col-md-3">
-                <div class="card h-100 shadow-sm border" style="border-top: 3px solid #2563eb !important;">
-                    <div class="card-body d-flex flex-column justify-content-between">
-                        <div>
-                            <div class="d-flex align-items-center justify-content-between mb-2">
-                                <span class="badge bg-light text-primary border fw-semibold">:8082</span>
-                                <i class="bi bi-geo-alt text-primary fs-5"></i>
-                            </div>
-                            <h6 class="fw-bold mb-1" style="color: #0f1c3f;">Protected Areas</h6>
-                            <p class="text-muted small mb-3">Sanctuaries, core/buffer zones, forest habitats and water sources.</p>
-                        </div>
-                        <div class="d-flex gap-2">
-                            <a href="http://localhost:8082/areas" class="btn btn-sm btn-outline-primary flex-grow-1">Areas</a>
-                            <a href="http://localhost:8082/zones" class="btn btn-sm btn-outline-secondary">Zones</a>
-                        </div>
+            <!-- Protected Areas -->
+            <div class="bg-white p-4 rounded-lg border border-slate-200 shadow-sm flex flex-col justify-between">
+                <div>
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-xs font-mono font-semibold text-slate-500">:8082</span>
+                        <i class="bi bi-geo-alt text-slate-400"></i>
                     </div>
+                    <div class="text-sm font-semibold text-navy-900">Protected Areas</div>
+                    <p class="text-xs text-slate-500 mt-1 mb-4">Reserves, zones, and water sources.</p>
+                </div>
+                <div class="flex items-center gap-2 pt-2 border-t border-slate-100">
+                    <a href="http://localhost:8082/areas" class="text-xs font-medium text-navy-900 hover:text-navy-700">Reserves &rarr;</a>
+                    <span class="text-slate-300">&bull;</span>
+                    <a href="http://localhost:8082/zones" class="text-xs text-slate-500 hover:text-slate-700">Zones</a>
                 </div>
             </div>
 
-            <!-- 3. Patrol -->
-            <div class="col-md-3">
-                <div class="card h-100 shadow-sm border" style="border-top: 3px solid #0284c7 !important;">
-                    <div class="card-body d-flex flex-column justify-content-between">
-                        <div>
-                            <div class="d-flex align-items-center justify-content-between mb-2">
-                                <span class="badge bg-light text-info border fw-semibold">:8083</span>
-                                <i class="bi bi-compass text-info fs-5"></i>
-                            </div>
-                            <h6 class="fw-bold mb-1" style="color: #0f1c3f;">Patrol Logistics</h6>
-                            <p class="text-muted small mb-3">Patrol route tracking, field ranger teams, vehicles and equipment.</p>
-                        </div>
-                        <div class="d-flex gap-2">
-                            <a href="http://localhost:8083/patrols" class="btn btn-sm btn-outline-primary flex-grow-1">Patrols</a>
-                            <a href="http://localhost:8083/staff" class="btn btn-sm btn-outline-secondary">Staff</a>
-                        </div>
+            <!-- Patrols -->
+            <div class="bg-white p-4 rounded-lg border border-slate-200 shadow-sm flex flex-col justify-between">
+                <div>
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-xs font-mono font-semibold text-slate-500">:8083</span>
+                        <i class="bi bi-compass text-slate-400"></i>
                     </div>
+                    <div class="text-sm font-semibold text-navy-900">Patrol Operations</div>
+                    <p class="text-xs text-slate-500 mt-1 mb-4">Field schedules, rangers, and vehicles.</p>
+                </div>
+                <div class="flex items-center gap-2 pt-2 border-t border-slate-100">
+                    <a href="http://localhost:8083/patrols" class="text-xs font-medium text-navy-900 hover:text-navy-700">Patrols &rarr;</a>
+                    <span class="text-slate-300">&bull;</span>
+                    <a href="http://localhost:8083/staff" class="text-xs text-slate-500 hover:text-slate-700">Staff</a>
                 </div>
             </div>
 
-            <!-- 4. Threat & Incident -->
-            <div class="col-md-3">
-                <div class="card h-100 shadow-sm border" style="border-top: 3px solid #dc2626 !important;">
-                    <div class="card-body d-flex flex-column justify-content-between">
-                        <div>
-                            <div class="d-flex align-items-center justify-content-between mb-2">
-                                <span class="badge bg-light text-danger border fw-semibold">:8084</span>
-                                <i class="bi bi-exclamation-triangle text-danger fs-5"></i>
-                            </div>
-                            <h6 class="fw-bold mb-1" style="color: #0f1c3f;">Threat & Rescue</h6>
-                            <p class="text-muted small mb-3">Emergency reports, rescues, veterinary rehab and conservation programmes.</p>
-                        </div>
-                        <div class="d-flex gap-2">
-                            <a href="http://localhost:8084/incidents" class="btn btn-sm btn-outline-danger flex-grow-1">Incidents</a>
-                            <a href="http://localhost:8084/rescues" class="btn btn-sm btn-outline-secondary">Rescues</a>
-                        </div>
+            <!-- Incidents -->
+            <div class="bg-white p-4 rounded-lg border border-slate-200 shadow-sm flex flex-col justify-between">
+                <div>
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-xs font-mono font-semibold text-slate-500">:8084</span>
+                        <i class="bi bi-exclamation-triangle text-slate-400"></i>
                     </div>
+                    <div class="text-sm font-semibold text-navy-900">Incidents & Threats</div>
+                    <p class="text-xs text-slate-500 mt-1 mb-4">Emergency alerts, rescues, and programmes.</p>
+                </div>
+                <div class="flex items-center gap-2 pt-2 border-t border-slate-100">
+                    <a href="http://localhost:8084/incidents" class="text-xs font-medium text-navy-900 hover:text-navy-700">Incidents &rarr;</a>
+                    <span class="text-slate-300">&bull;</span>
+                    <a href="http://localhost:8084/rescues" class="text-xs text-slate-500 hover:text-slate-700">Rescues</a>
                 </div>
             </div>
         </div>
 
-        <!-- Metric Stat Cards -->
-        <div class="row g-3 mb-4">
-            <div class="col-md-3">
-                <div class="card shadow-sm border h-100">
-                    <div class="card-body">
-                        <div class="text-muted small text-uppercase fw-semibold">Animals Registered</div>
-                        <div class="fs-2 fw-bold text-dark" th:text="${data.totalAnimals}">0</div>
-                        <small class="text-muted"><span th:text="${data.totalSpecies}">0</span> Species Catalogued</small>
-                    </div>
-                </div>
+        <!-- Metrics Row -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+            <div class="bg-white p-4 rounded-lg border border-slate-200">
+                <span class="text-xs font-medium text-slate-500 uppercase tracking-wider">Registered Animals</span>
+                <div class="text-2xl font-bold text-navy-900 mt-1" th:text="${data.totalAnimals}">0</div>
+                <span class="text-xs text-slate-400"><span th:text="${data.totalSpecies}">0</span> Species Catalogued</span>
             </div>
-            <div class="col-md-3">
-                <div class="card shadow-sm border h-100">
-                    <div class="card-body">
-                        <div class="text-muted small text-uppercase fw-semibold">Monitored Healthy</div>
-                        <div class="fs-2 fw-bold text-primary" th:text="${data.healthyAnimals}">0</div>
-                        <small class="text-muted">In Core & Buffer Zones</small>
-                    </div>
-                </div>
+
+            <div class="bg-white p-4 rounded-lg border border-slate-200">
+                <span class="text-xs font-medium text-slate-500 uppercase tracking-wider">Monitored Healthy</span>
+                <div class="text-2xl font-bold text-navy-900 mt-1" th:text="${data.healthyAnimals}">0</div>
+                <span class="text-xs text-slate-400">Active in Sanctuary Zones</span>
             </div>
-            <div class="col-md-3">
-                <div class="card shadow-sm border h-100">
-                    <div class="card-body">
-                        <div class="text-muted small text-uppercase fw-semibold">Medical / Critical Cases</div>
-                        <div class="fs-2 fw-bold text-danger" th:text="${data.injuredAnimals + ' / ' + data.criticalAnimals}">0</div>
-                        <small class="text-danger"><i class="bi bi-activity me-1"></i>Active Monitoring</small>
-                    </div>
-                </div>
+
+            <div class="bg-white p-4 rounded-lg border border-slate-200">
+                <span class="text-xs font-medium text-slate-500 uppercase tracking-wider">Veterinary Attention</span>
+                <div class="text-2xl font-bold text-slate-800 mt-1" th:text="${data.injuredAnimals + ' / ' + data.criticalAnimals}">0</div>
+                <span class="text-xs text-slate-400">Injured / Critical Cases</span>
             </div>
-            <div class="col-md-3">
-                <div class="card shadow-sm border h-100">
-                    <div class="card-body">
-                        <div class="text-muted small text-uppercase fw-semibold">Active Incidents (:8084)</div>
-                        <div class="fs-2 fw-bold text-warning" th:text="${data.unresolvedIncidents}">0</div>
-                        <small class="text-muted">Critical: <span class="fw-bold text-danger" th:text="${data.criticalIncidents}">0</span></small>
-                    </div>
-                </div>
+
+            <div class="bg-white p-4 rounded-lg border border-slate-200">
+                <span class="text-xs font-medium text-slate-500 uppercase tracking-wider">Active Incidents (:8084)</span>
+                <div class="text-2xl font-bold text-navy-900 mt-1" th:text="${data.unresolvedIncidents}">0</div>
+                <span class="text-xs text-slate-400">Critical Alerts: <span th:text="${data.criticalIncidents}">0</span></span>
             </div>
         </div>
 
-        <!-- System Node Health -->
-        <div class="card shadow-sm border mb-4">
-            <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
-                <span class="fw-bold"><i class="bi bi-hdd-network me-2 text-primary"></i>Distributed Microservice Health</span>
-                <span class="badge bg-light text-secondary border">All 4 Ports Verified</span>
-            </div>
-            <div class="card-body">
-                <div class="row text-center align-items-center">
-                    <div class="col-md-3 border-end">
-                        <div class="fw-bold" style="color: #0f1c3f;">Wildlife Service (:8081)</div>
-                        <div class="small text-muted mb-1">Catalogue & Dashboard Shell</div>
-                        <span class="badge bg-success">ACTIVE</span>
-                    </div>
-                    <div class="col-md-3 border-end">
-                        <div class="fw-bold" style="color: #0f1c3f;">Protected Areas (:8082)</div>
-                        <div class="small text-muted mb-1"><span th:text="${data.totalAreas}">0</span> Areas &bull; <span th:text="${data.totalZones}">0</span> Zones</div>
-                        <span class="badge" th:classappend="${data.totalAreas != 'N/A' ? 'bg-success' : 'bg-secondary'}" th:text="${data.totalAreas != 'N/A' ? 'CONNECTED' : 'DISCOVERING'}"></span>
-                    </div>
-                    <div class="col-md-3 border-end">
-                        <div class="fw-bold" style="color: #0f1c3f;">Patrol Logistics (:8083)</div>
-                        <div class="small text-muted mb-1"><span th:text="${data.activePatrols}">0</span> Patrols Active</div>
-                        <span class="badge" th:classappend="${data.activePatrols != 'N/A' ? 'bg-success' : 'bg-secondary'}" th:text="${data.activePatrols != 'N/A' ? 'CONNECTED' : 'DISCOVERING'}"></span>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="fw-bold" style="color: #0f1c3f;">Incidents & Rescue (:8084)</div>
-                        <div class="small text-muted mb-1"><span th:text="${data.unresolvedIncidents}">0</span> Incident Reports</div>
-                        <span class="badge" th:classappend="${data.unresolvedIncidents != 'N/A' ? 'bg-success' : 'bg-secondary'}" th:text="${data.unresolvedIncidents != 'N/A' ? 'CONNECTED' : 'DISCOVERING'}"></span>
-                    </div>
+        <!-- Service Connectivity Status Strip -->
+        <div class="bg-white p-4 rounded-lg border border-slate-200 mb-6">
+            <div class="text-xs font-semibold text-slate-700 uppercase tracking-wider mb-3">Microservice Health Status</div>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+                <div class="p-2 bg-slate-50 rounded border border-slate-100">
+                    <div class="text-xs font-semibold text-navy-900">Wildlife (:8081)</div>
+                    <div class="text-xs text-slate-500 mt-0.5">ONLINE</div>
+                </div>
+                <div class="p-2 bg-slate-50 rounded border border-slate-100">
+                    <div class="text-xs font-semibold text-navy-900">Areas (:8082)</div>
+                    <div class="text-xs text-slate-500 mt-0.5"><span th:text="${data.totalAreas}">0</span> Areas, <span th:text="${data.totalZones}">0</span> Zones</div>
+                </div>
+                <div class="p-2 bg-slate-50 rounded border border-slate-100">
+                    <div class="text-xs font-semibold text-navy-900">Patrols (:8083)</div>
+                    <div class="text-xs text-slate-500 mt-0.5"><span th:text="${data.activePatrols}">0</span> Active Patrols</div>
+                </div>
+                <div class="p-2 bg-slate-50 rounded border border-slate-100">
+                    <div class="text-xs font-semibold text-navy-900">Incidents (:8084)</div>
+                    <div class="text-xs text-slate-500 mt-0.5"><span th:text="${data.unresolvedIncidents}">0</span> Active Reports</div>
                 </div>
             </div>
         </div>
 
         <!-- Recent Observations Table -->
-        <div class="card shadow-sm border mb-4">
-            <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
-                <span class="fw-bold"><i class="bi bi-eye me-2 text-primary"></i>Latest Field Observations</span>
-                <a th:href="@{/animals}" class="btn btn-sm btn-outline-primary">View All Records</a>
+        <div class="bg-white rounded-lg border border-slate-200 overflow-hidden">
+            <div class="p-4 border-b border-slate-200 flex items-center justify-between">
+                <span class="text-xs font-semibold text-slate-700 uppercase tracking-wider">Recent Field Observations</span>
+                <a th:href="@{/animals}" class="text-xs text-navy-900 hover:underline">View All &rarr;</a>
             </div>
             <div class="table-responsive">
-                <table class="table table-hover align-middle mb-0">
+                <table class="table align-middle mb-0">
                     <thead>
                         <tr>
                             <th>Tag ID</th>
@@ -193,18 +165,18 @@
                     </thead>
                     <tbody>
                         <tr th:each="obs : ${data.recentObservations}">
-                            <td><span class="badge bg-light text-dark border font-monospace" th:text="${obs.animalTagId}">TAG</span></td>
-                            <td class="fw-semibold" th:text="${obs.observerName}">Observer</td>
-                            <td th:text="${obs.observationDate}">Date</td>
-                            <td th:text="${obs.location}">Location</td>
-                            <td th:text="${obs.behavior}">Behavior</td>
-                            <td><span class="badge bg-light text-secondary border" th:text="${obs.healthNote}">Health</span></td>
+                            <td><span class="font-mono text-xs font-semibold text-navy-900" th:text="${obs.animalTagId}">TAG</span></td>
+                            <td class="font-medium text-slate-800" th:text="${obs.observerName}">Observer</td>
+                            <td class="text-slate-500" th:text="${obs.observationDate}">Date</td>
+                            <td class="text-slate-600" th:text="${obs.location}">Location</td>
+                            <td class="text-slate-600" th:text="${obs.behavior}">Behavior</td>
+                            <td><span class="inline-block px-2 py-0.5 text-xs rounded bg-slate-100 text-slate-700 border border-slate-200" th:text="${obs.healthNote}">Health</span></td>
                         </tr>
                     </tbody>
                 </table>
             </div>
         </div>
-        
+
     </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

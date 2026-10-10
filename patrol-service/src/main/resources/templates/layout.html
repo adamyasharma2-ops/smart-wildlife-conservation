@@ -4,6 +4,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title th:text="${title} + ' | NatureSheild'">NatureSheild Operations</title>
+    <!-- Tailwind CSS Play CDN for ultra-clean utility styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        navy: {
+                            950: '#070f1e',
+                            900: '#0b192c',
+                            850: '#0e223d',
+                            800: '#152d4e',
+                            700: '#1e3e62',
+                            600: '#2b5484'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" th:href="@{/css/wildguard.css}">
@@ -11,144 +31,142 @@
 <body>
 
 <nav th:fragment="sidebar(activeMenu)" class="sidebar">
-    <!-- Brand Header -->
+    <!-- Brand -->
     <div class="sidebar-header">
         <a href="http://localhost:8081/dashboard" class="sidebar-brand-link">
-            <div class="brand-icon-box">
+            <div class="brand-icon">
                 <i class="bi bi-shield-check"></i>
             </div>
-            <div>
-                <div class="brand-title">Nature<span>Sheild</span></div>
-                <div class="brand-subtitle">Protected Habitat System</div>
-            </div>
+            <div class="brand-name">NatureSheild</div>
         </a>
     </div>
 
+    <!-- Navigation List -->
     <div class="sidebar-nav">
-        <!-- Dashboard Button -->
+        <!-- Top Dashboard Button -->
         <a href="http://localhost:8081/dashboard" 
-           class="btn-sidebar-dashboard" 
+           class="sidebar-link-dashboard" 
            th:classappend="${activeMenu == 'dashboard' ? 'active' : ''}">
             <i class="bi bi-grid-fill"></i>
             <span class="flex-grow-1">Dashboard</span>
-            <i class="bi bi-chevron-right small opacity-50"></i>
+            <i class="bi bi-chevron-right arrow-icon"></i>
         </a>
 
-        <div class="sidebar-section-title">Microservices</div>
+        <div class="sidebar-heading">Microservices</div>
 
-        <!-- 1. Wildlife Service (8081) -->
-        <div class="mb-1">
-            <button class="service-toggle-btn" 
+        <!-- 1. Wildlife Service (:8081) -->
+        <div>
+            <button class="sidebar-module-btn" 
                     type="button" 
                     data-bs-toggle="collapse" 
                     data-bs-target="#menuWildlife" 
                     th:aria-expanded="${activeMenu == 'animals' or activeMenu == 'species' ? 'true' : 'false'}">
-                <span class="d-flex align-items-center gap-2">
-                    <i class="bi bi-flower1 text-info"></i>
+                <span class="flex items-center gap-2">
+                    <i class="bi bi-flower1"></i>
                     <span>Wildlife</span>
                 </span>
-                <span class="d-flex align-items-center gap-1">
-                    <span class="sidebar-port-pill">:8081</span>
-                    <i class="bi bi-chevron-down toggle-icon"></i>
+                <span class="flex items-center gap-1.5">
+                    <span class="port-tag">8081</span>
+                    <i class="bi bi-chevron-down arrow-icon"></i>
                 </span>
             </button>
             <div class="collapse" id="menuWildlife" th:classappend="${activeMenu == 'animals' or activeMenu == 'species' ? 'show' : ''}">
-                <ul class="service-submenu">
-                    <li><a href="http://localhost:8081/animals" th:classappend="${activeMenu == 'animals' ? 'active' : ''}"><i class="bi bi-list-ul"></i> Animals Directory</a></li>
-                    <li><a href="http://localhost:8081/animals/new"><i class="bi bi-plus-circle"></i> Add Animal</a></li>
-                    <li><a href="http://localhost:8081/species" th:classappend="${activeMenu == 'species' ? 'active' : ''}"><i class="bi bi-tags"></i> Species Catalogue</a></li>
-                    <li><a href="http://localhost:8081/species/new"><i class="bi bi-folder-plus"></i> Add Species</a></li>
+                <ul class="sidebar-subnav">
+                    <li><a href="http://localhost:8081/animals" th:classappend="${activeMenu == 'animals' ? 'active' : ''}">Animals Directory</a></li>
+                    <li><a href="http://localhost:8081/animals/new">Add Animal</a></li>
+                    <li><a href="http://localhost:8081/species" th:classappend="${activeMenu == 'species' ? 'active' : ''}">Species Catalogue</a></li>
+                    <li><a href="http://localhost:8081/species/new">Add Species</a></li>
                 </ul>
             </div>
         </div>
 
-        <!-- 2. Protected Area Service (8082) -->
-        <div class="mb-1">
-            <button class="service-toggle-btn" 
+        <!-- 2. Protected Areas (:8082) -->
+        <div>
+            <button class="sidebar-module-btn" 
                     type="button" 
                     data-bs-toggle="collapse" 
                     data-bs-target="#menuProtectedArea" 
                     th:aria-expanded="${activeMenu == 'areas' or activeMenu == 'zones' or activeMenu == 'habitats' or activeMenu == 'water' ? 'true' : 'false'}">
-                <span class="d-flex align-items-center gap-2">
-                    <i class="bi bi-geo-alt text-info"></i>
+                <span class="flex items-center gap-2">
+                    <i class="bi bi-geo-alt"></i>
                     <span>Protected Areas</span>
                 </span>
-                <span class="d-flex align-items-center gap-1">
-                    <span class="sidebar-port-pill">:8082</span>
-                    <i class="bi bi-chevron-down toggle-icon"></i>
+                <span class="flex items-center gap-1.5">
+                    <span class="port-tag">8082</span>
+                    <i class="bi bi-chevron-down arrow-icon"></i>
                 </span>
             </button>
             <div class="collapse" id="menuProtectedArea" th:classappend="${activeMenu == 'areas' or activeMenu == 'zones' or activeMenu == 'habitats' or activeMenu == 'water' ? 'show' : ''}">
-                <ul class="service-submenu">
-                    <li><a href="http://localhost:8082/areas" th:classappend="${activeMenu == 'areas' ? 'active' : ''}"><i class="bi bi-map"></i> Reserves & Parks</a></li>
-                    <li><a href="http://localhost:8082/areas/new"><i class="bi bi-plus-circle"></i> Add Area</a></li>
-                    <li><a href="http://localhost:8082/zones" th:classappend="${activeMenu == 'zones' ? 'active' : ''}"><i class="bi bi-bounding-box"></i> Zones</a></li>
-                    <li><a href="http://localhost:8082/habitats" th:classappend="${activeMenu == 'habitats' ? 'active' : ''}"><i class="bi bi-tree"></i> Habitats</a></li>
-                    <li><a href="http://localhost:8082/water-sources" th:classappend="${activeMenu == 'water' ? 'active' : ''}"><i class="bi bi-droplet"></i> Water Sources</a></li>
+                <ul class="sidebar-subnav">
+                    <li><a href="http://localhost:8082/areas" th:classappend="${activeMenu == 'areas' ? 'active' : ''}">Reserves & Parks</a></li>
+                    <li><a href="http://localhost:8082/areas/new">Add Reserve</a></li>
+                    <li><a href="http://localhost:8082/zones" th:classappend="${activeMenu == 'zones' ? 'active' : ''}">Zones</a></li>
+                    <li><a href="http://localhost:8082/habitats" th:classappend="${activeMenu == 'habitats' ? 'active' : ''}">Habitats</a></li>
+                    <li><a href="http://localhost:8082/water-sources" th:classappend="${activeMenu == 'water' ? 'active' : ''}">Water Sources</a></li>
                 </ul>
             </div>
         </div>
 
-        <!-- 3. Patrol Service (8083) -->
-        <div class="mb-1">
-            <button class="service-toggle-btn" 
+        <!-- 3. Patrols (:8083) -->
+        <div>
+            <button class="sidebar-module-btn" 
                     type="button" 
                     data-bs-toggle="collapse" 
                     data-bs-target="#menuPatrol" 
                     th:aria-expanded="${activeMenu == 'patrols' or activeMenu == 'staff' or activeMenu == 'resources' ? 'true' : 'false'}">
-                <span class="d-flex align-items-center gap-2">
-                    <i class="bi bi-compass text-info"></i>
+                <span class="flex items-center gap-2">
+                    <i class="bi bi-compass"></i>
                     <span>Patrols</span>
                 </span>
-                <span class="d-flex align-items-center gap-1">
-                    <span class="sidebar-port-pill">:8083</span>
-                    <i class="bi bi-chevron-down toggle-icon"></i>
+                <span class="flex items-center gap-1.5">
+                    <span class="port-tag">8083</span>
+                    <i class="bi bi-chevron-down arrow-icon"></i>
                 </span>
             </button>
             <div class="collapse" id="menuPatrol" th:classappend="${activeMenu == 'patrols' or activeMenu == 'staff' or activeMenu == 'resources' ? 'show' : ''}">
-                <ul class="service-submenu">
-                    <li><a href="http://localhost:8083/patrols" th:classappend="${activeMenu == 'patrols' ? 'active' : ''}"><i class="bi bi-calendar-check"></i> Patrol Log</a></li>
-                    <li><a href="http://localhost:8083/patrols/new"><i class="bi bi-plus-circle"></i> Schedule Patrol</a></li>
-                    <li><a href="http://localhost:8083/staff" th:classappend="${activeMenu == 'staff' ? 'active' : ''}"><i class="bi bi-people"></i> Field Staff</a></li>
-                    <li><a href="http://localhost:8083/staff/new"><i class="bi bi-person-plus"></i> Add Staff</a></li>
-                    <li><a href="http://localhost:8083/resources" th:classappend="${activeMenu == 'resources' ? 'active' : ''}"><i class="bi bi-truck"></i> Vehicles & Equipment</a></li>
+                <ul class="sidebar-subnav">
+                    <li><a href="http://localhost:8083/patrols" th:classappend="${activeMenu == 'patrols' ? 'active' : ''}">Patrol Log</a></li>
+                    <li><a href="http://localhost:8083/patrols/new">Schedule Patrol</a></li>
+                    <li><a href="http://localhost:8083/staff" th:classappend="${activeMenu == 'staff' ? 'active' : ''}">Field Staff</a></li>
+                    <li><a href="http://localhost:8083/staff/new">Add Staff</a></li>
+                    <li><a href="http://localhost:8083/resources" th:classappend="${activeMenu == 'resources' ? 'active' : ''}">Vehicles & Gear</a></li>
                 </ul>
             </div>
         </div>
 
-        <!-- 4. Incident & Rescue Service (8084) -->
-        <div class="mb-1">
-            <button class="service-toggle-btn" 
+        <!-- 4. Threat & Incidents (:8084) -->
+        <div>
+            <button class="sidebar-module-btn" 
                     type="button" 
                     data-bs-toggle="collapse" 
                     data-bs-target="#menuIncident" 
                     th:aria-expanded="${activeMenu == 'incidents' or activeMenu == 'report' or activeMenu == 'rescues' or activeMenu == 'programmes' ? 'true' : 'false'}">
-                <span class="d-flex align-items-center gap-2">
-                    <i class="bi bi-exclamation-triangle text-warning"></i>
-                    <span>Incidents & Rescue</span>
+                <span class="flex items-center gap-2">
+                    <i class="bi bi-exclamation-triangle"></i>
+                    <span>Incidents</span>
                 </span>
-                <span class="d-flex align-items-center gap-1">
-                    <span class="sidebar-port-pill">:8084</span>
-                    <i class="bi bi-chevron-down toggle-icon"></i>
+                <span class="flex items-center gap-1.5">
+                    <span class="port-tag">8084</span>
+                    <i class="bi bi-chevron-down arrow-icon"></i>
                 </span>
             </button>
             <div class="collapse" id="menuIncident" th:classappend="${activeMenu == 'incidents' or activeMenu == 'report' or activeMenu == 'rescues' or activeMenu == 'programmes' ? 'show' : ''}">
-                <ul class="service-submenu">
-                    <li><a href="http://localhost:8084/incidents" th:classappend="${activeMenu == 'incidents' ? 'active' : ''}"><i class="bi bi-list-check"></i> Incidents Log</a></li>
-                    <li><a href="http://localhost:8084/incidents/new"><i class="bi bi-plus-circle"></i> Report Incident</a></li>
-                    <li><a href="http://localhost:8084/incidents/report" th:classappend="${activeMenu == 'report' ? 'active' : ''}"><i class="bi bi-file-earmark-bar-graph"></i> Monthly Report</a></li>
-                    <li><a href="http://localhost:8084/rescues" th:classappend="${activeMenu == 'rescues' ? 'active' : ''}"><i class="bi bi-heart-pulse"></i> Rescue Cases</a></li>
-                    <li><a href="http://localhost:8084/programmes" th:classappend="${activeMenu == 'programmes' ? 'active' : ''}"><i class="bi bi-clipboard2-check"></i> Programmes</a></li>
+                <ul class="sidebar-subnav">
+                    <li><a href="http://localhost:8084/incidents" th:classappend="${activeMenu == 'incidents' ? 'active' : ''}">Incidents Log</a></li>
+                    <li><a href="http://localhost:8084/incidents/new">Report Incident</a></li>
+                    <li><a href="http://localhost:8084/incidents/report" th:classappend="${activeMenu == 'report' ? 'active' : ''}">Monthly Report</a></li>
+                    <li><a href="http://localhost:8084/rescues" th:classappend="${activeMenu == 'rescues' ? 'active' : ''}">Rescue Cases</a></li>
+                    <li><a href="http://localhost:8084/programmes" th:classappend="${activeMenu == 'programmes' ? 'active' : ''}">Programmes</a></li>
                 </ul>
             </div>
         </div>
     </div>
 
-    <!-- Sidebar Footer -->
+    <!-- Minimal Logout Footer -->
     <div class="sidebar-footer">
-        <a href="http://localhost:8081/login" class="btn-sidebar-logout">
+        <a href="http://localhost:8081/login">
             <i class="bi bi-box-arrow-left"></i>
-            <span>Logout</span>
+            <span>Sign Out</span>
         </a>
     </div>
 </nav>
